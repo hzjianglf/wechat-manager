@@ -13,7 +13,7 @@ import javax.persistence.TemporalType;
  * LeaveRecords entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "leave_records", catalog = "ht")
+@Table(name = "leave_records", catalog = "wechat")
 public class LeaveRecords implements java.io.Serializable {
 
 	// Fields

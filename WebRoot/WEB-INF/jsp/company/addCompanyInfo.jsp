@@ -38,26 +38,33 @@
 						
 						<div class="am-form-group">
 							<label for="title">名称：</label> <input type="text" id="companyName" value="${info.companyName }"
-								name="companyName" minlength="2" placeholder="输入标题（至少 3 个字符）" required />
+								name="companyName" minlength="2" placeholder="输入名称（至少 3 个字符）" required />
 						</div>
 						<div id="nameMessage" style="color: red;margin-bottom: 12px;"></div>
 
 						<div class="am-form-group">
-							<label for="content">介绍内容：</label> <input type="text" id="companyInfo" value="${info.companyInfo }"
-								name="companyInfo" placeholder="输入内容" required />
+							<label for="content">介绍内容：</label> <%-- <input type="text" id="companyInfo" value="${info.companyInfo }"
+								name="companyInfo" placeholder="输入内容" required /> --%>
+								<textarea id="companyInfo" name=companyInfo rows="25"
+								style="width: 100%; border: 1px">${info.companyInfo}</textarea>
 						</div>
+						<div id="uploadList"></div>
+						<input type="hidden" id="pp"> <select id="selectPicss"
+							name="pic">
+							<option value="">请选择</option>
+						</select>
 						<div id="nameMessage" style="color: red;margin-bottom: 12px;"></div>
 
 						<div class="am-form-group">
-							<label for="positionSalary">图片：</label>
+							<label for="positionSalary">logo图片：</label>
 							<input type="hidden" name="companyPic" id="companyPic" value="${info.companyPic}"/>
 						
 							<!-- 为空时 默认显示的图片 -->
 							<c:if test="${info.companyPic == null}">
-								<img id="companyImage" src="${info.companyPic}" height="25px" width="25px">
+								<img id="companyImage" src="${info.companyPic}" height="50px" width="50px">
 							</c:if>
 							<c:if test="${info.companyPic != null}">
-								<img id="companyImage" src="${info.companyPic}" height="25px" width="25px">
+								<img id="companyImage" src="${info.companyPic}" height="50px" width="50px">
 							</c:if>  
  							<input type="file" id="uploadImage" name="picFile" onchange="ajaxFileUpload()"/>
 						</div>
@@ -84,12 +91,54 @@
 	</div>
 	<%@include file="/WEB-INF/jsp/index/foot.jsp"%>
 	<script src="${pageContext.request.contextPath}/plugins/ajaxfileupload.js"></script>
+	<script src="${pageContext.request.contextPath}/plugins/xheditor/xheditor-1.2.2.min.js"></script>
 	<script type="text/javascript">
+	
+	$(document)
+	.ready(
+			function() {
+				//初始化xhEditor编辑器插件  
+				$('#companyInfo')
+						.xheditor(
+								{
+									tools : 'full',
+									skin : 'default',
+									html5Upload : false,
+									upImgUrl : "${pageContext.request.contextPath}/file/xheditorFileUpload",
+									upImgExt : "jpg,jpeg,gif,bmp,png",
+									onUpload : insertUpload
+								});
+				//xbhEditor编辑器图片上传回调函数  
+				function insertUpload(msg) {
+					var _msg = msg.toString();
+					var _picture_name = _msg.substring(_msg.lastIndexOf("/") + 1);
+					var _picture_path = Substring(_msg);
+					var _str = "<input type='checkbox' name='_pictures' id='pics' value='"+_picture_path+"' checked='checked' onclick='return false'/><label>"
+							+ _picture_name + "</label><br/>";
+					$('#companyInfo').append(
+							"<img src='"+_msg+"' id='img' width='300' height='200'/>");
+					$("#uploadList").append(_str);
+
+					$("#selectPicss").append(
+							"<option value='"+_msg+"'>"
+									+ _picture_name + "</option>");
+
+					//这里拿checkbox的值拿不到，默认取最后一张图片的值
+					$("#pp").val(_msg);
+				}
+				//处理服务器返回到回调函数的字符串内容,格式是JSON的数据格式.  
+				function Substring(s) {
+					return s.substring(s.substring(0,
+							s.lastIndexOf("/")).lastIndexOf("/"),
+							s.length);
+				}
+			});
+	
 	function ajaxFileUpload(){  
 	    
 	    $.ajaxFileUpload({  
 	        //处理文件上传操作的服务器端地址(可以传参数,已亲测可用)  
-	        url:"${pageContext.request.contextPath}/company/ajaxFileUpload",  
+	        url:"${pageContext.request.contextPath}/file/ajaxFileUpload",  
 	        secureuri:false,                           //是否启用安全提交,默认为false   
 	        fileElementId:'uploadImage',               //文件选择框的id属性  
 	        dataType:'text',                           //服务器返回的格式,可以是json或xml等  
@@ -103,8 +152,6 @@
 	            if(data.substring(0, 1) == 0){         //0表示上传成功(后跟上传后的文件路径),1表示失败(后跟失败描述)
 	                $("img[id='companyImage']").attr("src", data.substring(2));
 	            	var src=$("img[id='companyImage']").attr("src");
-	               // document.getElementById("companyPic").value=data.substring(2);
-	                
 	                $("#companyPic").val(data.substring(2));
 	                $('#result').html("图片上传成功<br/>");  
 	            }else{  
@@ -123,11 +170,9 @@
 								var id = "${info.id}";
 								var name = $("#companyName").val();
 								var content = $("#companyInfo").val();
-								//var picSrc = $("#companyImage").attr("src");
 								var createTime = $("#createTime").val();
 								var titleId = "${info.id}";
 								var picStr=$("#companyPic").val();
-								alert(picStr+"==");
 								$
 										.ajax({
 											type : 'post',

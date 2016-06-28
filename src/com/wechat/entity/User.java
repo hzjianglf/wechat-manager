@@ -20,7 +20,7 @@ import javax.persistence.UniqueConstraint;
  * User entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "sys_user", catalog = "ht", uniqueConstraints = @UniqueConstraint(columnNames = "user_name"))
+@Table(name = "sys_user", catalog = "wechat", uniqueConstraints = @UniqueConstraint(columnNames = "user_name"))
 public class User implements java.io.Serializable {
 
 	// Fields

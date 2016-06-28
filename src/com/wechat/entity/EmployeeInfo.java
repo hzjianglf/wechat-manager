@@ -19,7 +19,7 @@ import com.wechat.validate.Str;
  * EmployeeInfo entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "employee_info", catalog = "ht")
+@Table(name = "employee_info", catalog = "wechat")
 public class EmployeeInfo implements java.io.Serializable {
 
 	// Fields

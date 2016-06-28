@@ -43,8 +43,9 @@
 						<div id="nameMessage" style="color: red;margin-bottom: 12px;"></div>
 
 						<div class="am-form-group">
-							<label for="content">团队介绍内容：</label> <input type="text" id="teamInfo" value="${info.teamInfo }"
-								name="teamInfo" placeholder="输入内容" required />
+							<label for="content">团队介绍内容：</label> 
+							<textarea id="teamInfo" name="teamInfo" rows="25"
+								style="width: 100%; border: 1px">${info.teamInfo}</textarea>
 						</div>
 						<div id="nameMessage" style="color: red;margin-bottom: 12px;"></div>
 
@@ -54,12 +55,12 @@
 						
 							<!-- 为空时 默认显示的图片 -->
 							<c:if test="${info.teamPic == null}">
-								<img id="teamImage" src="${info.teamPic}" height="25px" width="25px">
+								<img id="teamImage" src="${info.teamPic}" height="50px" width="50px">
 							</c:if>
 							<c:if test="${info.teamPic != null}">
-								<img id="teamImage" src="${info.teamPic}" height="25px" width="25px">
+								<img id="teamImage" src="${info.teamPic}" height="50px" width="50px">
 							</c:if>  
- 							<input type="file" id="uploadImage" name="picFiles" onchange="ajaxFileUpload()"/>
+ 							<input type="file" id="uploadImage" name="picFile" onchange="ajaxFileUpload()"/>
 						</div>
 
 						<div class="am-form-group">
@@ -83,12 +84,41 @@
 	</div>
 	<%@include file="/WEB-INF/jsp/index/foot.jsp"%>
 	<script src="${pageContext.request.contextPath}/plugins/ajaxfileupload.js"></script>
+	<script  src="${pageContext.request.contextPath}/plugins/xheditor/xheditor-1.2.2.min.js"></script>
 	<script type="text/javascript">
+	
+	$(document)
+	.ready(
+			function() {
+				//初始化xhEditor编辑器插件  
+				$('#teamInfo')
+						.xheditor(
+								{
+									tools : 'full',
+									skin : 'default',
+									html5Upload : false,
+									upImgUrl : "${pageContext.request.contextPath}/file/xheditorFileUpload",
+									upImgExt : "jpg,jpeg,gif,bmp,png",
+									onUpload : insertUpload
+								});
+				function insertUpload(msg) {
+					var _msg = msg.toString();
+					
+					$('#teamInfo').append(
+							"<img src='"+_msg+"' id='img' width='30' height='30'/>");
+				}
+				//处理服务器返回到回调函数的字符串内容,格式是JSON的数据格式.  
+				function Substring(s) {
+					return s.substring(s.substring(0,
+							s.lastIndexOf("/")).lastIndexOf("/"),
+							s.length);
+				}
+			});
 	function ajaxFileUpload(){  
 	    
 	    $.ajaxFileUpload({  
 	        //处理文件上传操作的服务器端地址(可以传参数,已亲测可用)  
-	        url:"${pageContext.request.contextPath}/team/ajaxFileUpload",  
+	        url:"${pageContext.request.contextPath}/file/ajaxFileUpload",  
 	        secureuri:false,                           //是否启用安全提交,默认为false   
 	        fileElementId:'uploadImage',               //文件选择框的id属性  
 	        dataType:'text',                           //服务器返回的格式,可以是json或xml等  

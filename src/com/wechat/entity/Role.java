@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * Role entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "sys_role", catalog = "ht")
+@Table(name = "sys_role", catalog = "wechat")
 public class Role implements java.io.Serializable {
 
 	// Fields

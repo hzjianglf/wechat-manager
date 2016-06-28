@@ -62,7 +62,6 @@
 								<tr>
 									<th>序号</th>
 									<th>标题</th>
-									<th>内容</th>
 									<th>图片</th>
 									<th>创建人</th>
 									<th>创建时间</th>
@@ -75,8 +74,7 @@
 									<tr>
 										<td>${status.index + (page.currentPage - 1)*page.pageSize + 1}</td>
 										<td>${p.title}</td>
-										<td>${p.content}</td>
-										<td><img src="${p.pic}" width="30px" height="20px"/></td>
+										<td><img src="${p.pic}" width="80px" height="60px"/></td>
 										<td>${p.userName}</td>
 										<td><fmt:formatDate value="${p.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 										<td>

@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="sys_prev_role"
-    ,catalog="ht"
+    ,catalog="wechat"
 )
 
 public class PrevRole  implements java.io.Serializable {

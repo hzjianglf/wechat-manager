@@ -107,8 +107,8 @@ public class CompanyController extends BaseController {
 		
 		//将file转成字节
 		byte[] fileToByte=file.getBytes();
-		//
-		FileOutputStream out=new FileOutputStream(new File(path+"/upload/"+time+fileName));
+		//FileOutputStream out=new FileOutputStream(new File(path+"/upload/"+time+fileName));
+		FileOutputStream out=new FileOutputStream(new File("D:/opt/pic/" +time+fileName));
 		out.write(fileToByte);
 		
 		out.flush();
@@ -117,7 +117,8 @@ public class CompanyController extends BaseController {
 		//ajax返回数据
 		response.setContentType("text/plain; charset=UTF-8");
 		PrintWriter pw=response.getWriter();
-		pw.println("0`" + request.getContextPath() + "/upload/" + time+fileName);
+		//pw.println("0`" + request.getContextPath() + "/upload/" + time+fileName);
+		pw.println("0`" + time+fileName);
 		pw.flush();
 		pw.close();
 	}

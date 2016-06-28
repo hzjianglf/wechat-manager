@@ -38,7 +38,7 @@
    				<div class="am-u-lg-3">
 				    <div class="am-input-group am-input-group-secondary am-form-group">
 				      <span class="am-input-group-label">名称</span>
-				      <input type="text" name="companyName" placeholder="名称" value="${c.companyName}" class="am-form-field"/>
+				      <input type="text" name="companyName" placeholder="名称" value="${company.companyName}" class="am-form-field"/>
 				    </div>
 				 </div>
 				 
@@ -51,7 +51,7 @@
 			</div>
     		</form>
     		<form action="${pageContext.request.contextPath}/company/companyList" method="post" id="form2">
-    			<input type="hidden" name="companyName" value="${honorInfo.companyName}" />
+    			<input type="hidden" name="companyName" value="${company.companyName}" />
     			<input type="hidden" id="currentPage2" name="currentPage" value="1" />
     		</form>
 			<div class="am-g">
@@ -61,9 +61,8 @@
 							<thead>
 								<tr>
 									<th>序号</th>
-									<th>名称</th>
-									<th>介绍内容</th>
-									<th>图片</th>
+									<th>公司名称</th>
+									<th>logo图片</th>
 									<th>创建人</th>
 									<th>创建时间</th>
 									<th>状态</th>
@@ -75,8 +74,7 @@
 									<tr>
 										<td>${status.index + (page.currentPage - 1)*page.pageSize + 1}</td>
 										<td>${p.companyName}</td>
-										<td>${p.companyInfo}</td>
-										<td><img src="${p.companyPic}" width="30px" height="20px"/></td>
+										<td><img src="${p.companyPic}" width="80px" height="60px"/></td>
 										<td>${p.userName}</td>
 										<td><fmt:formatDate value="${p.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 										<td>
@@ -190,7 +188,6 @@
 			        onConfirm: function(options) {
 			        	del(id);
 			        },
-			        // closeOnConfirm: false,
 			        onCancel: function(){
 			          return;
 			        }

@@ -62,7 +62,6 @@
 								<tr>
 									<th>序号</th>
 									<th>名称</th>
-									<th>团队介绍</th>
 									<th>图片</th>
 									<th>创建人</th>
 									<th>创建时间</th>
@@ -75,8 +74,7 @@
 									<tr>
 										<td>${status.index + (page.currentPage - 1)*page.pageSize + 1}</td>
 										<td>${p.teamName}</td>
-										<td>${p.teamInfo}</td>
-										<td><img src="${p.teamPic}" width="30px" height="20px"/></td>
+										<td><img src="${p.teamPic}" width="80px" height="60px"/></td>
 										<td>${p.userName}</td>
 										<td><fmt:formatDate value="${p.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 										<td>

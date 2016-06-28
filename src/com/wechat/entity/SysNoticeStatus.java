@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="sys_notice_status"
-    ,catalog="ht"
+    ,catalog="wechat"
 )
 
 public class SysNoticeStatus  implements java.io.Serializable {

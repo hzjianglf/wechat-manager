@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * SysNotice entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "sys_notice", catalog = "ht")
+@Table(name = "sys_notice", catalog = "wechat")
 public class SysNotice implements java.io.Serializable {
 
 	// Fields

@@ -14,7 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="sys_user_role"
-    ,catalog="ht"
+    ,catalog="wechat"
 )
 
 public class UserRole  implements java.io.Serializable {

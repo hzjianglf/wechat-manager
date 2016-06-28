@@ -14,7 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="sys_prev_deparment"
-    ,catalog="ht"
+    ,catalog="wechat"
 )
 
 public class Deparment  implements java.io.Serializable {

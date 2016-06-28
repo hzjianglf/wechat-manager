@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * EmployeeSalary entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "employee_salary", catalog = "ht")
+@Table(name = "employee_salary", catalog = "wechat")
 public class EmployeeSalary implements java.io.Serializable {
 
 	// Fields

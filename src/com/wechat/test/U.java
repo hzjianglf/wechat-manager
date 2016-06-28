@@ -14,6 +14,9 @@ public class U {
 		BASE64Encoder encoder = new BASE64Encoder();
 		String str = encoder.encode(bt);
 		System.err.println(str);
+		
+		String s="/org.eclipse.wst.server.core/tmp1/wtpwebapps/wechat-manager/";
+		System.err.println(s.substring(0, s.indexOf("/wechat-manager")));
 	}
 	
 }

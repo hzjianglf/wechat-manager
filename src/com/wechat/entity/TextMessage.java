@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * @date 2016年6月6日 上午10:18:47
  */
 @Entity
-@Table(name="weixin_text",catalog="ht")
+@Table(name="weixin_text",catalog="wechat")
 public class TextMessage implements Serializable{
 
 	/**

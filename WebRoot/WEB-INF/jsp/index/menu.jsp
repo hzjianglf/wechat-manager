@@ -34,6 +34,12 @@
 	         <slp:privilege module="teamInfoList" oprator="all">
 	          <li><a href="${pageContext.request.contextPath}/team/teamList"  class="am-cf menuBtn"> 技术团队</a></li>
 	         </slp:privilege>
+	         <slp:privilege module="articleInfoList" oprator="all">
+	          <li><a href="${pageContext.request.contextPath}/article/articleList"  class="am-cf menuBtn"> 首页文章</a></li>
+	         </slp:privilege>
+	         <slp:privilege module="serviceItemList" oprator="all">
+	          <li><a href="${pageContext.request.contextPath}/service/serviceItemList"  class="am-cf menuBtn"> 服务项目</a></li>
+	         </slp:privilege>
          </ul>
         </li>
         </slp:privilege>

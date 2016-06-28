@@ -23,7 +23,7 @@ public class NoticeServiceImpl extends BaseServiceImpl implements NoticeService 
 	 */
 	public Map<String, Object> findNoticeAll(PageQueryUtil page, User user)
 			throws Exception {
-		String hql = "select new com.oa.bean.NoticeBean(p,u.userName,u.nickName) "
+		String hql = "select new com.wechat.bean.NoticeBean(p,u.userName,u.nickName) "
 				+ " from SysNotice p,User u where p.userId=u.id "
 				+ " and p.isDel=? order by p.createTime desc";
 		return backPage(hql, page, new Object[] { Constrants.DATA_NOT_DEL });

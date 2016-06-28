@@ -23,4 +23,10 @@ public class MyDateUtil {
 		
 		return ts;
 	}
+	
+	public static String dateToString(Date date ,String format){
+		DateFormat sdf=new SimpleDateFormat(format);
+		String dateStr=sdf.format(date);
+		return dateStr;
+	}
 }

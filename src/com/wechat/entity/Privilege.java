@@ -24,7 +24,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * Privilege entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "sys_privilege", catalog = "ht", uniqueConstraints = @UniqueConstraint(columnNames = {
+@Table(name = "sys_privilege", catalog = "wechat", uniqueConstraints = @UniqueConstraint(columnNames = {
 		"module", "oprator" }))
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Privilege implements java.io.Serializable {

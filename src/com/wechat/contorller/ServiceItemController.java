@@ -176,7 +176,7 @@ public class ServiceItemController extends BaseController {
 				User user=(User) getSession().getAttribute(Constrants.USER_KEY);
 				item.setCreateUser(user.getId());
 				item.setCreateTime(MyDateUtil.stringToTimestamp(createTime));
-				item.setIsShow(Constrants.DATA_NOT_DEL);
+				item.setIsDel(Constrants.DATA_NOT_DEL);
 				if (item.getId() == null) {
 					serviceItemService.save(item);
 				} else {

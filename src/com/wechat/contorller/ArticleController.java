@@ -188,7 +188,7 @@ public class ArticleController extends BaseController {
 			if (flag == false) {
 				StringTools.trim(article);
 				article.setCreateTime(MyDateUtil.stringToTimestamp(createTime));
-				article.setIsShow(Constrants.DATA_NOT_DEL);
+				article.setIsDel(Constrants.DATA_NOT_DEL);
 				if (article.getId() == null) {
 					articleService.save(article);
 				} else {

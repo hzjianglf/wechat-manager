@@ -49,7 +49,7 @@ public class ArticleServiceImpl extends BaseServiceImpl implements
 	 */
 	@Override
 	public Integer deleteArticle(BigInteger id) {
-		String hql="update Article set isShow=? where id=? ";
+		String hql="update Article set isDel=? where id=? ";
 		return getBaseDao().executeHql(hql, Constrants.DATA_DEL,id);
 	}
 	

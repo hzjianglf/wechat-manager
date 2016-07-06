@@ -14,7 +14,7 @@ public class ServiceItemVo implements Serializable {
 	private String servicePic;
 	private Timestamp createTime;
 	private String userName;
-	private Integer isShow;
+	private Integer isDel;
 	public Integer getId() {
 		return id;
 	}
@@ -51,11 +51,11 @@ public class ServiceItemVo implements Serializable {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public Integer getIsShow() {
-		return isShow;
+	public Integer getIsDel() {
+		return isDel;
 	}
-	public void setIsShow(Integer isShow) {
-		this.isShow = isShow;
+	public void setIsDel(Integer isDel) {
+		this.isDel = isDel;
 	}
 	
 }

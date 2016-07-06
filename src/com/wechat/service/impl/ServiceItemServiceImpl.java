@@ -40,7 +40,7 @@ public class ServiceItemServiceImpl extends BaseServiceImpl implements
 
 	@Override
 	public Integer deleteServiceItem(Integer id) {
-		String hql="update ServiceItem set isShow=? where id=? ";
+		String hql="update ServiceItem set isDel=? where id=? ";
 		return getBaseDao().executeHql(hql, Constrants.DATA_DEL,id);
 	}
 	

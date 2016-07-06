@@ -192,6 +192,12 @@ public class TeamController extends BaseController {
 				flag = true;
 			}
 
+			/*String nameMessage = "";
+			if (!map.containsKey("nameMessage")) {
+				flag = true;
+				nameMessage = "技术团队名称超过15！";
+				map.put("nameMessage", nameMessage);
+			}*/
 			if (flag == false) {
 				StringTools.trim(team);
 				User user=(User) getSession().getAttribute(Constrants.USER_KEY);

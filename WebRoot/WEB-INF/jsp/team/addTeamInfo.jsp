@@ -38,9 +38,9 @@
 						
 						<div class="am-form-group">
 							<label for="title">名称：</label> <input type="text" id="teamName" value="${info.teamName }"
-								name="teamName" minlength="2" placeholder="输入团队名称（至少 3 个字符）" required />
+								name="teamName"  placeholder="输入团队名称（至少 2 个字符）" required />
 						</div>
-						<div id="nameMessage" style="color: red;margin-bottom: 12px;"></div>
+						<div id="teamNameMessage" style="color: red;margin-bottom: 12px;"></div>
 
 						<div class="am-form-group">
 							<label for="content">团队介绍内容：</label> 
@@ -169,10 +169,10 @@
 											url : "${pageContext.request.contextPath}/team/addTeamInfoCommit",
 											success : function(data) {
 												if (data.errorFlags) {
-													$("#nameMessage").html("");
+													$("#teamNameMessage").html("");
 													$("#createTimeMessage").html("");
-													$("#nameMessage").html(
-															data.nameMessage);
+													$("#teamNameMessage").html(
+															data.teamNameMessage);
 													
 													$("#createTimeMessage")
 															.html(

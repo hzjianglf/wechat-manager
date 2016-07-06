@@ -12,6 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.wechat.validate.NotNull;
+import com.wechat.validate.Str;
+
 /**
  * 技术团队表
  * @Description:
@@ -29,6 +32,8 @@ public class Team implements Serializable{
 	
 	private Integer id;
 	
+	@NotNull("团队名称")
+	@Str(minLength = 2, maxLength = 25, mesName = "团队名称")
 	private String teamName;
 	
 	private String teamInfo;

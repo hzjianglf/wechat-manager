@@ -39,7 +39,9 @@ public class ServiceItem implements Serializable{
 	
 	private Timestamp createTime;
 	
-	private Integer isShow;
+	private Integer isDel;
+	
+	private Integer parentId;
 
 	
 	@Id
@@ -98,14 +100,23 @@ public class ServiceItem implements Serializable{
 		this.createTime = createTime;
 	}
 
-	@Column(name="is_show")
-	public Integer getIsShow() {
-		return isShow;
+	@Column(name="is_del")
+	public Integer getIsDel() {
+		return isDel;
 	}
 
-	public void setIsShow(Integer isShow) {
-		this.isShow = isShow;
+	public void setIsDel(Integer isDel) {
+		this.isDel = isDel;
+	}
+
+	@Column(name="parent_id")
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
 	}
 	
-
+	
 }

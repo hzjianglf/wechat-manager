@@ -14,54 +14,61 @@
 	<%@include file="/WEB-INF/jsp/public/tools.jsp"%>
 
 	<div class="am-cf admin-main">
-		<!-- sidebar start -->
 		<%@include file="/WEB-INF/jsp/index/menu.jsp"%>
-		<!-- sidebar end -->
 
-		<!-- content start -->
 		<div class="admin-content">
 
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
 					<small>位置</small>：<small>荣誉管理中心</small>
 					/<small>
-					<a href="${pageContext.request.contextPath}/honor/honorList">荣誉信息管理</a>
+					<a href="${pageContext.request.contextPath}/about_us/honor/honorList">荣誉信息管理</a>
 					</small>/<small>荣誉信息添加或修改</small>
 				</div>
 			</div>
 			<div style="width: 60%;margin: 0 auto;">
 				<form
-					action="${pageContext.request.contextPath}/honor/addHonorInfoCommit"
+					action="${pageContext.request.contextPath}/about_us/honor/addHonorInfoCommit"
 					class="am-form" data-am-validator>
 					<fieldset>
-						<!-- <legend>JS 表单验证</legend> -->
 						
 						<!-- id为title和content这两个字段时候，  $("#title").val() 这样取值为空-->
 						<div class="am-form-group">
 							<label for="title">标题：</label> <input type="text" id="titles" value="${info.title }"
-								name="title" minlength="2" placeholder="输入标题（至少 3 个字符）" required />
+								name="title" minlength="3" placeholder="输入标题（至少 3 个字符）" required />
 						</div>
-						<div id="nameMessage" style="color: red;margin-bottom: 12px;"></div>
+						<div id="titleMessage" style="color: red;margin-bottom: 12px;"></div>
 
 						<div class="am-form-group">
 							<label for="content">内容：</label> <textarea id="contents" name=content rows="25"
 								style="width: 100%; border: 1px">${info.content}</textarea>
 						</div>
-						<div id="nameMessage" style="color: red;margin-bottom: 12px;"></div>
+						<div id="contentMessage" style="color: red;margin-bottom: 12px;"></div>
 
 						<div class="am-form-group">
+							<script type="text/javascript">
+							jQuery(function(){
+					            UploadPic("imageUrl_pic", "imageUrl_progress", "imageUrl_src", "honorPic");
+					            			//上传按钮------进度条----------------显示照片--------传值(name属性)
+							});
+							</script>
+							
 							<label for="positionSalary">图片：</label>
-							<input type="hidden" name="pic" id="pic" value="${info.pic}"/>
+							<div>
+							<input type="hidden" name="honorPic" id="pic" value="${info.pic}"/>
 						
-							<c:if test="${info.pic != null}">
-								<img id="honorImage" src="${info.pic}" height="50px" width="50px">
+							<c:if test="${info.pic != '' && info.pic ne null}">
+								<img id="imageUrl_src" src="/image/photo?imgName=${info.pic}" height="150px" width="150px">
 							</c:if>  
-							<c:if test="${info.pic == null}">
-								<img id="honorImage" src="${info.pic}" height="50px" width="50px">
+							<c:if test="${info.pic == '' || info.pic eq null}">
+								<img id="imageUrl_src" src="" height="150px" width="150px">
 							</c:if>  
- 							<input type="file" id="uploadImage" name="picFile" onchange="ajaxFileUpload()"/>
+ 							
+							<span><input type="file" id="imageUrl_pic" value="上传图片" class="search-button" />（大小不超过1M）</span>
+			    			<div id="imageUrl_progress"></div>
+			    			</div>
 						</div>
-
+						<div id="honorPicMessage" style="color:red;margin-bottom:12px"></div>
 						<div class="am-form-group">
 							<label for="createTime">发布时间：</label> <input type="text"
 								id="createTime" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
@@ -76,15 +83,12 @@
 			</div>
 		</div>
 		<!-- content end -->
-		<form action="${pageContext.request.contextPath}/honor/honorList" id="sx" method="post">
-			<input type="hidden" name="name" value="${employeeInfo.name}" />
-			<input type="hidden" name="gender" value="${employeeInfo.gender}" />
+		<form action="${pageContext.request.contextPath}/about_us/honor/honorList" id="sx" method="post">
+			<input type="hidden" name="title" value="${honorInfo.title}" />
 			<input type="hidden" name="currentPage" value="${pageQueryUtil.currentPage}" />
 		</form>
 	</div>
 	<%@include file="/WEB-INF/jsp/index/foot.jsp"%>
-	<script src="${pageContext.request.contextPath}/plugins/ajaxfileupload.js"></script>
-	<script src="${pageContext.request.contextPath}/plugins/xheditor/xheditor-1.2.2.min.js"></script>
 	<script type="text/javascript">
 	
 	$(document)
@@ -115,35 +119,7 @@
 							s.length);
 				}
 			});
-	function ajaxFileUpload(){  
-	    
-	    $.ajaxFileUpload({  
-	        //处理文件上传操作的服务器端地址(可以传参数,已亲测可用)  
-	        url:"${pageContext.request.contextPath}/file/ajaxFileUpload",  
-	        secureuri:false,                           //是否启用安全提交,默认为false   
-	        fileElementId:'uploadImage',               //文件选择框的id属性  
-	        dataType:'text',                           //服务器返回的格式,可以是json或xml等  
-	        success:function(data, status){            //服务器响应成功时的处理函数  
-	            data = data.replace(/<pre.*?>/g, '');  //ajaxFileUpload会对服务器响应回来的text内容加上<pre style="....">text</pre>前后缀  
-	            data = data.replace(/<PRE.*?>/g, '');  
-	            data = data.replace("<PRE>", '');  
-	            data = data.replace("</PRE>", '');  
-	            data = data.replace("<pre>", '');  
-	            data = data.replace("</pre>", '');     //本例中设定上传文件完毕后,服务端会返回给前台[0`filepath]  
-	            if(data.substring(0, 1) == 0){         //0表示上传成功(后跟上传后的文件路径),1表示失败(后跟失败描述)
-	                $("img[id='honorImage']").attr("src", data.substring(2));
-	               	var src=$("#honorImage").attr("src");
-	                document.getElementById("pic").value=src;
-	                $('#result').html("图片上传成功<br/>");  
-	            }else{  
-	                $('#result').html('图片上传失败，请重试！！');  
-	            }  
-	        },  
-	        error:function(data, status, e){ //服务器响应失败时的处理函数  
-	            $('#result').html('图片上传失败，请重试！！');  
-	        }  
-	    });  
-	}
+	
 		$(function() {
 			$("#submit")
 					.click(
@@ -151,10 +127,11 @@
 								var id = "${info.id}";
 								var title = $("#titles").val();
 								var content = $("#contents").val();
-								var picSrc = $("#honorImage").attr("src");
+								var honorPic = $("#imageUrl_src").attr("src");
 								var createTime = $("#createTime").val();
 								var titleId = "${info.id}";
 								var picStr=$("#pic").val();
+								console.log(honorPic+"==="+picStr);
 								$
 										.ajax({
 											type : 'post',
@@ -164,22 +141,21 @@
 												id : id,
 												title : title,
 												content : content,
-												pic : picSrc,
+												pic : picStr,
 												createTime : createTime
 												
 											},
-											url : "${pageContext.request.contextPath}/honor/addHonorInfoCommit",
+											url : "${pageContext.request.contextPath}/about_us/honor/addHonorInfoCommit",
 											success : function(data) {
 												if (data.errorFlags) {
-													$("#nameMessage").html("");
-													$("#createTimeMessage").html("");
-													$("#nameMessage").html(
-															data.nameMessage);
+													$("#titleMessage").html("");
+													$("#contentMessage").html("");
+													$("#honorPicMessage").html("");
 													
-													$("#createTimeMessage")
-															.html(
-																	data.entryTimeMessage);
-													
+													$("#titleMessage").html(data.titleMessage);
+													$("#contentMessage").html(data.contentMessage);
+													$("#honorPicMessage").html(data.picMessage);
+															
 												} else {
 													amazeAlertSuccess(data.message);
 													window
@@ -188,7 +164,7 @@
 																		if(id != null && id != ""){
 																			$("#sx").submit();
 																		} else {
-																			window.location.href = "${pageContext.request.contextPath}/honor/honorList";
+																			window.location.href = "${pageContext.request.contextPath}/about_us/honor/honorList";
 																		}
 																		
 																	}, 1000);

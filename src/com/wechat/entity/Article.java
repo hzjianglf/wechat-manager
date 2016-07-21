@@ -12,6 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.wechat.validate.NotNull;
+import com.wechat.validate.Str;
+
 /**
  * 文章表
  * @Description:
@@ -29,20 +32,29 @@ public class Article implements Serializable{
 	
 	private BigInteger id;
 	
+	@NotNull("新闻标题")
+	@Str(mesName="标题",maxLength=40)
 	private String title;
 	
+	@NotNull("标签")
 	private String tag;
 	
+	@NotNull("新闻内容")
 	private String content;
-	
+	@NotNull("新闻图片")
 	private String pic;
-	
+	@NotNull("作者")
 	private String author;
 	
+	@NotNull("新闻时间")
 	private Timestamp createTime;
 	
 	private Integer isDel;
-
+	@NotNull("一句话描述")
+	@Str(mesName="描述",maxLength=40)
+	private String description;
+	@NotNull("新闻类型")
+	private int newsType;
 	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -116,6 +128,23 @@ public class Article implements Serializable{
 
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+	@Column(name="description")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Column(name="news_type")
+	public int getNewsType() {
+		return newsType;
+	}
+
+	public void setNewsType(int newsType) {
+		this.newsType = newsType;
 	}
 	
 	

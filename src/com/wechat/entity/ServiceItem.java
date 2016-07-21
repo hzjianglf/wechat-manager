@@ -11,6 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.wechat.validate.NotNull;
+import com.wechat.validate.Str;
+
 /**
  * 
  * @Description 
@@ -29,10 +32,14 @@ public class ServiceItem implements Serializable{
 	
 	private Integer id;
 	
+	@NotNull("服务名称")
+	@Str(mesName="服务名",maxLength=40)
 	private String serviceName;
 	
+	@NotNull("服务内容")
 	private String serviceContent;
 	
+	@NotNull("图片")
 	private String servicePic;
 		
 	private Integer createUser;
@@ -41,8 +48,11 @@ public class ServiceItem implements Serializable{
 	
 	private Integer isDel;
 	
+	@NotNull("服务类型")
 	private Integer parentId;
-
+	@NotNull("服务优势")
+	@Str(mesName="服务优势")
+	private String serviceAdvantage;
 	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -116,6 +126,14 @@ public class ServiceItem implements Serializable{
 
 	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
+	}
+	@Column(name="service_advantage")
+	public String getServiceAdvantage() {
+		return serviceAdvantage;
+	}
+
+	public void setServiceAdvantage(String serviceAdvantage) {
+		this.serviceAdvantage = serviceAdvantage;
 	}
 	
 	

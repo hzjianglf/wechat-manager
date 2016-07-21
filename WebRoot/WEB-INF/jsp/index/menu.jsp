@@ -8,37 +8,109 @@
       <!-- wechat后台首页  -->
 	    <li><a class="am-cf" href="javascript:void(0)"><span class="am-icon-home am-icon-fw"></span> 首页<span class="am-icon-angle-right am-fr am-margin-right"></span></a></li>
 	    
-	    <!-- 公司管理中心 -->
-	    <slp:privilege module="CompanyManager" oprator="all">
+	    <!-- 关于我们 -->
+	    <slp:privilege module="AboutUs" oprator="all">
         <li>
         	<c:choose>
-			<c:when test="${requestScope.module == 'CompanyManager' }">
-			<a id="CompanyManager" name="company" class="am-cf" data-am-collapse="{target: '#collapse-company'}"><span class="am-icon-archive am-icon-fw"></span> 公司信息管理中心 <span id="company" class="am-icon-angle-down am-fr am-margin-right"></span></a>
+			<c:when test="${requestScope.module == 'AboutUs' }">
+			<a id="AboutUs" name="company" class="am-cf" data-am-collapse="{target: '#collapse-company'}"><span class="am-icon-archive am-icon-fw"></span> 关于我们 <span id="company" class="am-icon-angle-down am-fr am-margin-right"></span></a>
 			</c:when>
 			<c:otherwise>
-				<a id="CompanyManager" name="company" class="am-cf" data-am-collapse="{target: '#collapse-company'}"><span class="am-icon-archive am-icon-fw"></span> 公司信息管理中心 <span id="company" class="am-icon-angle-right am-fr am-margin-right"></span></a>
+				<a id="AboutUs" name="company" class="am-cf" data-am-collapse="{target: '#collapse-company'}"><span class="am-icon-archive am-icon-fw"></span> 关于我们 <span id="company" class="am-icon-angle-right am-fr am-margin-right"></span></a>
 			</c:otherwise>          
           	</c:choose>
         
           <c:choose>
-			<c:when test="${requestScope.module == 'CompanyManager' }"><ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-company"></c:when><c:otherwise>
+			<c:when test="${requestScope.module == 'AboutUs' }"><ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-company"></c:when><c:otherwise>
 				<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-company">
 			</c:otherwise>          
           </c:choose>
           	<slp:privilege module="companyInfoList" oprator="all">
-	          <li><a href="${pageContext.request.contextPath}/company/companyList"  class="am-cf menuBtn"> 介绍信息</a></li>
+	          <li><a href="${pageContext.request.contextPath}/about_us/company/companyList"  class="am-cf menuBtn"> 公司介绍</a></li>
 	        </slp:privilege>
+          	<slp:privilege module="organizeInfoList" oprator="all">
+	          <li><a href="${pageContext.request.contextPath}/about_us/organize/organizeList"  class="am-cf menuBtn"> 组织机构</a></li>
+	        </slp:privilege>
+	        <slp:privilege module="teamInfoList" oprator="all">
+	          <li><a href="${pageContext.request.contextPath}/about_us/team/teamList"  class="am-cf menuBtn"> 技术团队</a></li>
+	         </slp:privilege>
+	         <slp:privilege module="cultureInfoList" oprator="all">
+	          <li><a href="${pageContext.request.contextPath}/about_us/culture/cultureList"  class="am-cf menuBtn"> 企业文化</a></li>
+	         </slp:privilege>
 	        <slp:privilege module="honorList" oprator="all">
-	          <li><a href="${pageContext.request.contextPath}/honor/honorList"  class="am-cf menuBtn"> 荣誉列表</a></li>
+	          <li><a href="${pageContext.request.contextPath}/about_us/honor/honorList"  class="am-cf menuBtn"> 资质荣誉</a></li>
 	         </slp:privilege>
-	         <slp:privilege module="teamInfoList" oprator="all">
-	          <li><a href="${pageContext.request.contextPath}/team/teamList"  class="am-cf menuBtn"> 技术团队</a></li>
-	         </slp:privilege>
-	         <slp:privilege module="articleInfoList" oprator="all">
-	          <li><a href="${pageContext.request.contextPath}/article/articleList"  class="am-cf menuBtn"> 首页文章</a></li>
-	         </slp:privilege>
+	         <slp:privilege module="historyInfoList" oprator="all">
+	          <li><a href="${pageContext.request.contextPath}/about_us/history/historyList"  class="am-cf menuBtn"> 历史沿革</a></li>
+	         </slp:privilege>   
+         </ul>
+        </li>
+        </slp:privilege>
+	    <slp:privilege module="Services" oprator="all">
+        <li>
+        	<c:choose>
+			<c:when test="${requestScope.module == 'Services' }">
+			<a id="Services" name="service" class="am-cf" data-am-collapse="{target: '#collapse-service'}"><span class="am-icon-archive am-icon-fw"></span> 服务 <span id="service" class="am-icon-angle-down am-fr am-margin-right"></span></a>
+			</c:when>
+			<c:otherwise>
+				<a id="Services" name="service" class="am-cf" data-am-collapse="{target: '#collapse-service'}"><span class="am-icon-archive am-icon-fw"></span> 服务 <span id="service" class="am-icon-angle-right am-fr am-margin-right"></span></a>
+			</c:otherwise>          
+          	</c:choose>
+        
+          <c:choose>
+			<c:when test="${requestScope.module == 'Services' }"><ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-service"></c:when><c:otherwise>
+				<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-service">
+			</c:otherwise>          
+          </c:choose>
 	         <slp:privilege module="serviceItemList" oprator="all">
 	          <li><a href="${pageContext.request.contextPath}/service/serviceItemList"  class="am-cf menuBtn"> 服务项目</a></li>
+	         </slp:privilege>
+	         <slp:privilege module="caseInfoList" oprator="all">
+	          <li><a href="${pageContext.request.contextPath}/case/caseList"  class="am-cf menuBtn"> 案例</a></li>
+	         </slp:privilege>
+         </ul>
+        </li>
+        </slp:privilege>
+	    <slp:privilege module="Laboratory" oprator="all">
+        <li>
+        	<c:choose>
+			<c:when test="${requestScope.module == 'Laboratory' }">
+			<a id="Laboratory" name="laboratory" class="am-cf" data-am-collapse="{target: '#collapse-laboratory'}"><span class="am-icon-archive am-icon-fw"></span> 功能实验室 <span id="laboratory" class="am-icon-angle-down am-fr am-margin-right"></span></a>
+			</c:when>
+			<c:otherwise>
+				<a id="Laboratory" name="laboratory" class="am-cf" data-am-collapse="{target: '#collapse-laboratory'}"><span class="am-icon-archive am-icon-fw"></span> 功能实验室 <span id="laboratory" class="am-icon-angle-right am-fr am-margin-right"></span></a>
+			</c:otherwise>          
+          	</c:choose>
+        
+          <c:choose>
+			<c:when test="${requestScope.module == 'Laboratory' }"><ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-laboratory"></c:when><c:otherwise>
+				<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-laboratory">
+			</c:otherwise>          
+          </c:choose>
+	         <slp:privilege module="laboratoryInfoList" oprator="all">
+	          <li><a href="${pageContext.request.contextPath}/laboratory/laboratoryList"  class="am-cf menuBtn"> 实验室</a></li>
+	         </slp:privilege>
+         </ul>
+        </li>
+        </slp:privilege>
+	    <slp:privilege module="Newss" oprator="all">
+        <li>
+        	<c:choose>
+			<c:when test="${requestScope.module == 'Newss' }">
+			<a id="Newss" name="newss" class="am-cf" data-am-collapse="{target: '#collapse-newss'}"><span class="am-icon-archive am-icon-fw"></span> 新闻活动 <span id="newss" class="am-icon-angle-down am-fr am-margin-right"></span></a>
+			</c:when>
+			<c:otherwise>
+				<a id="Newss" name="newss" class="am-cf" data-am-collapse="{target: '#collapse-newss'}"><span class="am-icon-archive am-icon-fw"></span> 新闻活动 <span id="newss" class="am-icon-angle-right am-fr am-margin-right"></span></a>
+			</c:otherwise>          
+          	</c:choose>
+        
+          <c:choose>
+			<c:when test="${requestScope.module == 'Newss' }"><ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-newss"></c:when><c:otherwise>
+				<ul class="am-list am-collapse admin-sidebar-sub" id="collapse-newss">
+			</c:otherwise>          
+          </c:choose>
+	         <slp:privilege module="articleInfoList" oprator="all">
+	          <li><a href="${pageContext.request.contextPath}/article/articleList"  class="am-cf menuBtn"> 新闻</a></li>
 	         </slp:privilege>
          </ul>
         </li>
@@ -64,12 +136,6 @@
           	<slp:privilege module="textMessageList" oprator="all">
 	          <li><a href="${pageContext.request.contextPath}/message/text/textMessageList"  class="am-cf menuBtn"> 文本消息</a></li>
 	        </slp:privilege>
-	        <slp:privilege module="honorList" oprator="all">
-	          <li><a href="${pageContext.request.contextPath}/honor/honorList"  class="am-cf menuBtn"> 荣誉列表</a></li>
-	         </slp:privilege>
-	         <slp:privilege module="teamInfoList" oprator="all">
-	          <li><a href="${pageContext.request.contextPath}/team/teamList"  class="am-cf menuBtn"> 技术团队</a></li>
-	         </slp:privilege>
          </ul>
         </li>
         </slp:privilege>
@@ -197,14 +263,38 @@
     	});
     	
     	$(document).ready(function(){    	
-    		$("#CompanyManager").click(function(){
+    		$("#AboutUs").click(function(){
     			var name = $(this).attr('name');
     			if($("#collapse-company").css("display") == "none"){
     				$("#"+name).attr("class", "am-icon-angle-down am-fr am-margin-right");
     			}else{
     				$("#"+name).attr("class", "am-icon-angle-right am-fr am-margin-right");
     			}
-    		});
+    		}); 
+    		$("#Services").click(function(){
+    			var name = $(this).attr('name');
+    			if($("#collapse-service").css("display") == "none"){
+    				$("#"+name).attr("class", "am-icon-angle-down am-fr am-margin-right");
+    			}else{
+    				$("#"+name).attr("class", "am-icon-angle-right am-fr am-margin-right");
+    			}
+    		}); 
+    		$("#Laboratory").click(function(){
+    			var name = $(this).attr('name');
+    			if($("#collapse-laboratory").css("display") == "none"){
+    				$("#"+name).attr("class", "am-icon-angle-down am-fr am-margin-right");
+    			}else{
+    				$("#"+name).attr("class", "am-icon-angle-right am-fr am-margin-right");
+    			}
+    		}); 
+    		$("#Newss").click(function(){
+    			var name = $(this).attr('name');
+    			if($("#collapse-newss").css("display") == "none"){
+    				$("#"+name).attr("class", "am-icon-angle-down am-fr am-margin-right");
+    			}else{
+    				$("#"+name).attr("class", "am-icon-angle-right am-fr am-margin-right");
+    			}
+    		}); 
     		$("#MessageManager").click(function(){
     			var name = $(this).attr('name');
     			if($("#collapse-message").css("display") == "none"){
@@ -213,14 +303,14 @@
     				$("#"+name).attr("class", "am-icon-angle-right am-fr am-margin-right");
     			}
     		});
-    		$("#HrManager").click(function(){
+    		/* $("#HrManager").click(function(){
     			var name = $(this).attr('name');
     			if($("#collapse-hr").css("display") == "none"){
     				$("#"+name).attr("class", "am-icon-angle-down am-fr am-margin-right");
     			}else{
     				$("#"+name).attr("class", "am-icon-angle-right am-fr am-margin-right");
     			}
-    		});
+    		}); */
     		
     		$("#EmployeeManager").click(function(){
     			var name = $(this).attr('name');

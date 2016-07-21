@@ -127,5 +127,20 @@ jQuery.extend({
             eval("data = " + data);        // evaluate scripts within html
         if (type == "html")
             jQuery("<div>").html(data).evalScripts();        return data;
+    },
+    handleError: function( s, xhr, status, e )      {  
+        // If a local callback was specified, fire it  
+        if ( s.error ) {  
+            s.error.call( s.context || s, xhr, status, e );  
+            s.error( xhr, status, e );
+        }  
+
+        // Fire the global callback  
+        if ( s.global ) {  
+            (s.context ? jQuery(s.context) : jQuery.event).trigger( "ajaxError", [xhr, s, e] );  
+        } 
+        // If we have some XML response text (e.g. from an AJAX call) then log it in the console
+        else if(xhr.responseText)
+            console.log(xhr.responseText);
     }
 })

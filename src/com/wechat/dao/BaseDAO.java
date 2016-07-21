@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import com.wechat.util.IPage;
 
 public interface BaseDAO {
@@ -203,4 +206,7 @@ public interface BaseDAO {
 	public <T> Long countSql(String sql, Object... param);
 	
 	public void delete(Class<?> cla, Long... ids);
+	
+	public Session getCurrentSession() ;
+	public Query sqlQuery(String sql);
 }

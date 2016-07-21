@@ -1,17 +1,4 @@
-/**   
- * Copyright: Copyright (c) 2015 lianxin
- * 
- * @ClassName: MenuStatusInterceptor.java
- * @Description: 后台页面菜单状�?请求后置处理拦截�?
- *
- * @version: v1.0.0
- * @author: master
- * @date: 2015-6-4 下午3:22:50
- *
- * Modification History:
- * Date         Author          Version            Description
- *---------------------------------------------------------*
- */package com.wechat.interceptor;
+package com.wechat.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +9,13 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.wechat.menu.Module;
 
+/**
+ * 
+ * @Description 后台页面菜单状态栏，请求后置处理拦截器
+ * @ClassName MenuStatusInterceptor.java
+ * @author Administrator-zhur
+ * @date 2016年7月21日下午2:41:29
+ */
 public class MenuStatusInterceptor extends HandlerInterceptorAdapter {
 
 	@Override

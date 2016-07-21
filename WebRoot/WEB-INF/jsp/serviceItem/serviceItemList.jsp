@@ -14,16 +14,13 @@
 	<%@include file="/WEB-INF/jsp/public/tools.jsp"%>
 
 	<div class="am-cf admin-main">
-		<!-- sidebar start -->
 		<%@include file="/WEB-INF/jsp/index/menu.jsp"%>
-		<!-- sidebar end -->
 
-		<!-- content start -->
 		<div class="admin-content">
 			
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-      				<small>位置</small>：<small>公司管理中心</small>/<small>服务项目管理</small>
+      				<small>位置</small>：<small>服务中心</small>/<small>服务项目管理</small>
       			</div>
 			</div>
 			<form action="${pageContext.request.contextPath}/service/serviceItemList" method="post" id="form1" class="am-form">
@@ -38,7 +35,7 @@
    				<div class="am-u-lg-3">
 				    <div class="am-input-group am-input-group-secondary am-form-group">
 				      <span class="am-input-group-label">名称</span>
-				      <input type="text" name="title" placeholder="名称" value="${c.serviceName}" class="am-form-field"/>
+				      <input type="text" name="serviceName" placeholder="名称" value="${itemInfo.serviceName}" class="am-form-field"/>
 				    </div>
 				 </div>
 				 
@@ -51,7 +48,7 @@
 			</div>
     		</form>
     		<form action="${pageContext.request.contextPath}/service/serviceItemList" method="post" id="form2">
-    			<input type="hidden" name="title" value="${honorInfo.title}" />
+    			<input type="hidden" name="serviceName" value="${itemInfo.serviceName}" />
     			<input type="hidden" id="currentPage2" name="currentPage" value="1" />
     		</form>
 			<div class="am-g">
@@ -62,7 +59,7 @@
 								<tr>
 									<th>序号</th>
 									<th>服务名称</th>
-									<th>主题图片</th>
+									<th>图片</th>
 									<th>创建人</th>
 									<th>创建时间</th>
 									<th>状态</th>
@@ -74,12 +71,20 @@
 									<tr>
 										<td>${status.index + (page.currentPage - 1)*page.pageSize + 1}</td>
 										<td>${p.serviceName}</td>
-										<td><img src="${p.servicePic}" width="80px" height="60px"/></td>
+										<c:choose>
+											<c:when test="${(p.servicePic ne '') &&(p.servicePic ne null) }">
+												<td><img src="/image/photo?imgName=${p.servicePic}" width="80px" height="60px"/></td>
+											</c:when>
+											<c:otherwise>
+												<td>没有图片信息</td>
+											</c:otherwise>
+										</c:choose>
+										
 										<td>${p.userName}</td>
 										<td><fmt:formatDate value="${p.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 										<td>
-											<c:if test="${p.isShow==0 }">显示</c:if>
-											<c:if test="${p.isShow==1 }">不显示</c:if>
+											<c:if test="${p.isDel==0 }">显示</c:if>
+											<c:if test="${p.isDel==1 }">不显示</c:if>
 											
 										</td>
 										<td>
@@ -88,11 +93,14 @@
 												
 								                <ul class="am-dropdown-content">
 								                
-								                  <slp:privilege module="ArticleManager" oprator="update">
+								                  <slp:privilege module="ServiceItemManager" oprator="update">
 								                  	<li><a href="javascript:void(0)" name="${p.id}" class="bj">编辑</a></li>
 								                  </slp:privilege>
-								                  <slp:privilege module="ArticleManager" oprator="delete">
+								                  <slp:privilege module="ServiceItemManager" oprator="delete">
 								                  	<li><a href="javascript:void(0)" class="del" name="${p.id}">删除</a></li>
+								                  </slp:privilege>
+								                  <slp:privilege module="ServiceItemManager" oprator="delete">
+								                  	<li><a href="javascript:void(0)" class="cas" name="${p.id}">案例</a></li>
 								                  </slp:privilege>
 								                </ul>
 								              </div></td>
@@ -114,7 +122,6 @@
 			</div>
 			<br><br><br><br><br>
 		</div>
-		<!-- content end -->
 
 	</div>
 	<%@include file="/WEB-INF/jsp/index/foot.jsp"%>
@@ -213,6 +220,12 @@
 				}
 				window.location.href = url + c;
 			});
+		});
+		
+		$(".cas").click(function(){
+			var id=$(this).attr("name");
+			var url="/service/bindCases/"+id;
+			window.location.href=url;
 		});
 	</script>
 </body>

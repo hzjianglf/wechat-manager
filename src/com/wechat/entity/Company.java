@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.wechat.validate.NotNull;
+
 /**
  * 公司表
  * @Description:
@@ -28,8 +30,9 @@ public class Company implements Serializable{
 	
 	private Integer id;
 	
+	@NotNull("公司名称")
 	private String companyName;
-	
+	@NotNull("公司介绍")
 	private String companyInfo;
 	
 	private String companyPic;

@@ -22,7 +22,7 @@ public class EmployeeServiceImpl extends BaseServiceImpl implements
 		EmployeeService {
 
 	public EmployeeInfoBean findMyInfo(Integer id) throws Exception {
-		String hql = "select new com.oa.bean.EmployeeInfoBean(p.name, p.idCard, p.age, p.gender, p.entryTime, p.mobileNumber, p.email, u.userName,"
+		String hql = "select new com.wechat.bean.EmployeeInfoBean(p.name, p.idCard, p.age, p.gender, p.entryTime, p.mobileNumber, p.email, u.userName,"
 				+ " p.performance, p.positionSalary, p.baseSalary, p.qqNumber) FROM EmployeeInfo p, User u where p.accountId=u.id and p.accountId=? "
 				+ "and p.isDel=?";
 		return getBaseDao().getOne(hql,
@@ -33,7 +33,7 @@ public class EmployeeServiceImpl extends BaseServiceImpl implements
 			PageQueryUtil page) throws Exception {
 		// 条件过多推荐使用stringBuffer
 		String chql = " where p.isDel = ?";
-		String hql = "select new com.oa.bean.EmployeeInfoBean(p.name, p.mobileNumber, p.email, p.qqNumber) from EmployeeInfo p";
+		String hql = "select new com.wechat.bean.EmployeeInfoBean(p.name, p.mobileNumber, p.email, p.qqNumber) from EmployeeInfo p";
 		List<Object> conditions = new ArrayList<Object>();
 		conditions.add(Constrants.DATA_NOT_DEL);
 		if (employeeInfo.getName() != null
@@ -46,7 +46,7 @@ public class EmployeeServiceImpl extends BaseServiceImpl implements
 	}
 
 	public List<EmployeeInfoBean> findAddressAll() throws Exception {
-		String hql = "select new com.oa.bean.EmployeeInfoBean(p.name, p.mobileNumber, p.email, p.qqNumber) from EmployeeInfo p where p.isDel = ?";
+		String hql = "select new com.wechat.bean.EmployeeInfoBean(p.name, p.mobileNumber, p.email, p.qqNumber) from EmployeeInfo p where p.isDel = ?";
 		return getBaseDao().find(hql, Constrants.DATA_NOT_DEL);
 	}
 
@@ -54,7 +54,7 @@ public class EmployeeServiceImpl extends BaseServiceImpl implements
 			PageQueryUtil page, Integer accountId) throws Exception {
 		// 条件过多推荐使用stringBuffer
 		String chql = " where p.employeeId = e.id and p.isDel = ? and e.accountId = ? ";
-		String hql = "select new com.oa.bean.EmployeeSalaryBean(e.name, p.grantTime, p.insuranceMoney, p.performance, p.taxMoney, p.leaveMoney, "
+		String hql = "select new com.wechat.bean.EmployeeSalaryBean(e.name, p.grantTime, p.insuranceMoney, p.performance, p.taxMoney, p.leaveMoney, "
 				+ "p.totalMoney, p.moneyNumber, p.otherMoney) from EmployeeSalary p, EmployeeInfo e";
 		List<Object> conditions = new ArrayList<Object>();
 		conditions.add(Constrants.DATA_NOT_DEL);
@@ -81,7 +81,7 @@ public class EmployeeServiceImpl extends BaseServiceImpl implements
 			PageQueryUtil page, Integer id) throws Exception {
 		// 条件过多推荐使用stringBuffer
 		String chql = " where p.employeeId = e.id and p.isDel = ? and e.accountId = ? and p.endStatus = ? ";
-		String hql = "select new com.oa.bean.LeaveRecordsBean(e.name, p.startTime, p.endTime, p.allHour) "
+		String hql = "select new com.wechat.bean.LeaveRecordsBean(e.name, p.startTime, p.endTime, p.allHour) "
 				+ "from LeaveRecords p, EmployeeInfo e";
 		List<Object> conditions = new ArrayList<Object>();
 		conditions.add(Constrants.DATA_NOT_DEL);

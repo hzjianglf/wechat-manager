@@ -28,8 +28,8 @@ public class ArticleServiceImpl extends BaseServiceImpl implements
 	public Map<String, Object> findArticlesByPage(Article article,
 			PageQueryUtil page) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select a.id,a.title,a.content,a.pic,a.author,a.create_time createTime,a.is_show isShow  from weixin_hot_article a ")
-		.append(" where a.is_show=?");
+		sql.append("select a.id,a.title,a.content,a.pic,a.author,a.create_time createTime,a.is_del isDel,a.news_type as newsType  from weixin_hot_article a ")
+		.append(" where a.is_del=?");
 		List<Object> list = new ArrayList<Object>();
 		list.add(Constrants.DATA_NOT_DEL);
 		if(!StringTools.isEmpty(article.getTitle())){

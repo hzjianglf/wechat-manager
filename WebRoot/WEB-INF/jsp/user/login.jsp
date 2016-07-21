@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib uri="/prev-tag" prefix="slp"%>
+
 <!doctype html>
 <html>
 <head>
@@ -60,7 +61,7 @@
       </div>
     </form>
     <hr>
-    <p align="center">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
+    <p align="center">© 2016 AllMobilize, Inc. Licensed under MIT license.</p>
   </div>
 </div>
 </body>

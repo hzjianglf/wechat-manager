@@ -4,8 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.math.BigInteger;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -16,18 +17,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.wechat.entity.Case;
 import com.wechat.entity.ServiceItem;
 import com.wechat.entity.User;
 import com.wechat.menu.Module;
 import com.wechat.prev.Prev;
+import com.wechat.service.CaseService;
 import com.wechat.service.ServiceItemService;
 import com.wechat.service.UserService;
 import com.wechat.util.Constrants;
@@ -39,7 +44,7 @@ import com.wechat.validate.Validate;
 
 @Controller
 @RequestMapping("/service")
-@Module("ServiceItemManager")
+@Module("Services")
 public class ServiceItemController extends BaseController {
     
 	private static final Log4jLogger log = Log4jLogger
@@ -51,6 +56,9 @@ public class ServiceItemController extends BaseController {
 	@Resource
 	private UserService userService;
 
+	@Resource
+	private CaseService caseService;
+	
 	@RequestMapping(value="/xheditorFileUpload" , method = RequestMethod.POST)
 	@Prev(module="ServiceItemManager" ,oprator="all")
 	public void xheditorFileUpload(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -144,7 +152,7 @@ public class ServiceItemController extends BaseController {
 			}
 			return new ModelAndView("serviceItem/addServiceItemInfo", "item",
 					serviceItemService.get(ServiceItem.class, id)).addObject(
-					"companyInfo", item).addObject("pageQueryUtil", page);
+					"itemInfo", item).addObject("pageQueryUtil", page);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -226,4 +234,32 @@ public class ServiceItemController extends BaseController {
 			throw e;
 		}
 	}
+	
+	@RequestMapping(value="/bindCases/{serviceId}")
+	@Prev(module = "ServiceItemManager", oprator = "bind")
+	public ModelAndView bindCases(@PathVariable int serviceId,PageQueryUtil page){
+		
+		//未绑定案例
+		List<Case> notBindCase=serviceItemService.queryNotBindCaseByServiceId(serviceId);
+		//已经绑定的案例
+		List<Case> bindCase=serviceItemService.queryCaseByServiceId(serviceId);
+		//return "serviceItem/bindServiceCases";
+		return new ModelAndView("serviceItem/bindServiceCases","notBindCase",notBindCase).addObject("bindCase", bindCase)
+				.addObject("serviceId", serviceId).addObject("pageQueryUtil", page);
+	}
+	
+	//@RequestBody String[] arrays,@RequestParam("arrays[]") List<String> ar
+	@RequestMapping(value="/bindServiceCaseCommit/{serviceId}")
+	@Prev(module = "ServiceItemManager", oprator = "bind")
+	@ResponseBody
+	public ModelMap bindServiceCaseCommit(@PathVariable int serviceId,@RequestParam("arrays[]") String[] arr){
+		Map map=new HashMap();
+		map.put("serviceId", serviceId);
+		map.put("arrays", arr);
+		boolean result=caseService.updateBindCaseByServiceId(map);
+		ModelMap m=new ModelMap();
+		m.put(Constrants.MESSAGE_TIP, "操作成功！");
+		return m;
+	}
+	
 }

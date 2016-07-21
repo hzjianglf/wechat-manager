@@ -26,19 +26,19 @@
       				<small>位置</small>：<small>公司管理中心</small>/<small>公司信息管理</small>
       			</div>
 			</div>
-			<form action="${pageContext.request.contextPath}/company/companyList" method="post" id="form1" class="am-form">
+			<form action="${pageContext.request.contextPath}/about_us/company/companyList" method="post" id="form1" class="am-form">
     		<div class="am-g">
     			<slp:privilege module="HrManager" oprator="add">
    				<div class="am-u-lg-2">
 				    <div class="am-input-group am-input-group-secondary am-form-group">
-				      <a href="${pageContext.request.contextPath}/company/addCompanyInfo"><span class="am-input-group-label">新增</span></a>
+				      <a href="${pageContext.request.contextPath}/about_us/company/addCompanyInfo"><span class="am-input-group-label">新增</span></a>
 				    </div>
 				 </div>
 				 </slp:privilege>
    				<div class="am-u-lg-3">
 				    <div class="am-input-group am-input-group-secondary am-form-group">
-				      <span class="am-input-group-label">名称</span>
-				      <input type="text" name="companyName" placeholder="名称" value="${company.companyName}" class="am-form-field"/>
+				      <span class="am-input-group-label">名称</span>${companyInfo.companyName}
+				      <input type="text" name="companyName" placeholder="名称" value="${companyInfo.companyName}" class="am-form-field"/>
 				    </div>
 				 </div>
 				 
@@ -50,8 +50,8 @@
 				 </div>
 			</div>
     		</form>
-    		<form action="${pageContext.request.contextPath}/company/companyList" method="post" id="form2">
-    			<input type="hidden" name="companyName" value="${company.companyName}" />
+    		<form action="${pageContext.request.contextPath}/about_us/company/companyList" method="post" id="form2">
+    			<input type="hidden" name="companyName" value="${companyInfo.companyName}" />
     			<input type="hidden" id="currentPage2" name="currentPage" value="1" />
     		</form>
 			<div class="am-g">
@@ -74,12 +74,19 @@
 									<tr>
 										<td>${status.index + (page.currentPage - 1)*page.pageSize + 1}</td>
 										<td>${p.companyName}</td>
-										<td><img src="${p.companyPic}" width="80px" height="60px"/></td>
+										<c:choose>
+											<c:when test="${p.companyPic ne null && p.companyPic ne '' }">
+												<td><img src="/image/photo?imgName=${p.companyPic}" width="80px" height="60px"/></td>											
+											</c:when>
+											<c:otherwise>
+												<td></td>
+											</c:otherwise>
+										</c:choose>
 										<td>${p.userName}</td>
 										<td><fmt:formatDate value="${p.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 										<td>
-											<c:if test="${p.isDel==0 }">再用</c:if>
-											<c:if test="${p.isDel==1 }">不可用</c:if>
+											<c:if test="${p.isDel==0 }">在用</c:if>
+											<c:if test="${p.isDel==1 }">已删除</c:if>
 											
 										</td>
 										<td>
@@ -149,7 +156,7 @@
 				data : {
 					id : id
 				},
-				url : "${pageContext.request.contextPath}/company/deleteCompanyInfo",
+				url : "${pageContext.request.contextPath}/about_us/company/deleteCompanyInfo",
 				success : function(data) {
 					if (data.errorFlags) {
 						alert(1);
@@ -197,7 +204,7 @@
 			
 			$(".bj").click(function(){
 				var id = $(this).attr("name");
-				var url = "${pageContext.request.contextPath}/company/updateCompanyInfo?id=" + id;
+				var url = "${pageContext.request.contextPath}/about_us/company/updateCompanyInfo?id=" + id;
 				var cname = "${honorInfo.companyName}";
 				var ccp = "${page.currentPage}";
 				

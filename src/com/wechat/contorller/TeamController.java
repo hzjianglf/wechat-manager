@@ -13,7 +13,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.codehaus.jackson.map.util.JSONPObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.druid.support.json.JSONParser;
 import com.wechat.entity.Team;
 import com.wechat.entity.User;
 import com.wechat.menu.Module;
@@ -33,14 +31,13 @@ import com.wechat.service.TeamService;
 import com.wechat.service.UserService;
 import com.wechat.util.Constrants;
 import com.wechat.util.Log4jLogger;
-import com.wechat.util.MyDateUtil;
 import com.wechat.util.PageQueryUtil;
 import com.wechat.util.StringTools;
 import com.wechat.validate.Validate;
 
 @Controller
-@RequestMapping("/team")
-@Module("TeamManager")
+@RequestMapping("/about_us/team")
+@Module("AboutUs")
 public class TeamController extends BaseController {
 
 	private static final Log4jLogger log = Log4jLogger
@@ -61,8 +58,18 @@ public class TeamController extends BaseController {
 	 */
 	@RequestMapping("/teamList")
 	@Prev(module="teamInfoList",oprator="all")
-	public ModelAndView honorList(Team team,PageQueryUtil page) throws Exception {
+	public ModelAndView honorList(HttpServletRequest req,Team team,PageQueryUtil page) throws Exception {
+		
+		log.error(req.getCharacterEncoding());
 		return backView("team/teamList", teamService.findTeamInfoByPage(team, page));
+	}
+	
+	@RequestMapping(value="/teamList",method=RequestMethod.POST)
+	@Prev(module="teamInfoList",oprator="all")
+	public ModelAndView teamQueryList(HttpServletRequest req,Team team,PageQueryUtil page) throws Exception{
+		//req.setCharacterEncoding("UTF-8");
+		log.error(req.getCharacterEncoding()+"=============");
+		return backView("/team/teamList", teamService.findTeamInfoByPage(team, page));
 	}
 
 	/**
@@ -181,7 +188,7 @@ public class TeamController extends BaseController {
 	@RequestMapping(value = "/addTeamInfoCommit", method = RequestMethod.POST)
 	@Prev(module = "TeamManager", oprator = "add")
 	@ResponseBody
-	public ModelMap addTeamInfoCommit(Team team, String createTime)
+	public ModelMap addTeamInfoCommit(Team team)
 			throws Exception {
 		try {
 			ModelMap map = new ModelMap();
@@ -202,7 +209,7 @@ public class TeamController extends BaseController {
 				StringTools.trim(team);
 				User user=(User) getSession().getAttribute(Constrants.USER_KEY);
 				team.setCreateUser(user.getId());
-				team.setCreateTime(MyDateUtil.stringToTimestamp(createTime));
+				//team.setCreateTime(MyDateUtil.stringToTimestamp(createTime));
 				team.setIsDel(Constrants.DATA_NOT_DEL);
 				if (team.getId() == null) {
 					teamService.save(team);

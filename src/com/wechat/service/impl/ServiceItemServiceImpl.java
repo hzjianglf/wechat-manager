@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.wechat.entity.Case;
 import com.wechat.entity.ServiceItem;
 import com.wechat.service.ServiceItemService;
 import com.wechat.util.Constrants;
@@ -23,9 +25,9 @@ public class ServiceItemServiceImpl extends BaseServiceImpl implements
 	public Map<String, Object> findServiceItemByPage(ServiceItem item,
 			PageQueryUtil page) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select s.id,s.service_name serviceName,u.user_name userName,s.service_content serviceContent,s.service_pic servicePic,s.create_time createTime,s.is_show isShow  from weixin_service_item s left join sys_user u")
+		sql.append("select s.id,s.service_name serviceName,u.user_name userName,s.service_content serviceContent,s.service_pic servicePic,s.create_time createTime,s.is_del isDel  from weixin_service_item s left join sys_user u")
 		.append(" on u.id=s.create_user")
-		.append(" where s.is_show=?");
+		.append(" where s.is_del=?");
 		List<Object> list = new ArrayList<Object>();
 		list.add(Constrants.DATA_NOT_DEL);
 		if(!StringTools.isEmpty(item.getServiceName())){
@@ -42,6 +44,24 @@ public class ServiceItemServiceImpl extends BaseServiceImpl implements
 	public Integer deleteServiceItem(Integer id) {
 		String hql="update ServiceItem set isDel=? where id=? ";
 		return getBaseDao().executeHql(hql, Constrants.DATA_DEL,id);
+	}
+
+	@Override
+	public List<Case> queryCaseByServiceId(int serviceId) {
+		String sql="select psc.case_name caseName,psc.id id from service_case sc,portal_service_case psc where psc.id=sc.case_id and sc.service_id=?";
+		Query query=getBaseDao().sqlQuery(sql);
+		query.setParameter(0, serviceId);
+		List<Case> listcase=query.list();
+		return listcase;
+	}
+
+	@Override
+	public List<Case> queryNotBindCaseByServiceId(int serviceId) {
+		String sql="select id,case_name from portal_service_case where id not in(select case_id from service_case where service_id=?)";
+		Query query=getBaseDao().sqlQuery(sql);
+		query.setParameter(0, serviceId);
+		List<Case> listcase=query.list();
+		return listcase;
 	}
 	
 }

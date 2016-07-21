@@ -35,8 +35,8 @@ import com.wechat.util.StringTools;
 import com.wechat.validate.Validate;
 
 @Controller
-@RequestMapping("/honor")
-@Module("HonorManager")
+@RequestMapping("/about_us/honor")
+@Module("AboutUs")
 public class HonorController extends BaseController {
 
 	private static final Log4jLogger log = Log4jLogger

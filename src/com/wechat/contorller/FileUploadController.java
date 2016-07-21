@@ -12,10 +12,14 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -23,6 +27,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.wechat.prev.Prev;
 import com.wechat.util.FileUtil;
 import com.wechat.util.MyDateUtil;
+import com.wechat.util.PictureUtil;
+import com.wechat.util.PropertyUtils;
 
 /**
  * 
@@ -72,6 +78,102 @@ public class FileUploadController extends BaseController{
                 
             }
         }
+	}
+	/**
+	 * 使用xheditor插件上传
+	 * 返回结构必需为json，并且结构如下：{"err":"","msg":"200906030521128703.gif"}
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/xheditorFileUpload2Map" , method = RequestMethod.POST)
+	@Prev(module="FileUploadManager" ,oprator="upload")
+	@ResponseBody
+	public ModelMap xheditorFileUpload1(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ModelMap map=new ModelMap();
+		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(
+				request.getSession().getServletContext());
+		// 设置编码
+		commonsMultipartResolver.setDefaultEncoding("utf-8");
+		if (commonsMultipartResolver.isMultipart(request)) {
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			MultipartFile image = multipartRequest.getFile("filedata");
+			byte[] bytes = image.getBytes();
+
+			long time = new Date().getTime();
+			String imageName = time + ".png";
+			String fullImageName = PropertyUtils.getProperty("photo.path")
+					+ PictureUtil.IMAGE_UPLOAD_FOLDER
+					+ PictureUtil.generateFolderPathByTime(time) + imageName;
+			java.io.File folder = new java.io.File(
+					PropertyUtils.getProperty("photo.path")
+							+ PictureUtil.IMAGE_UPLOAD_FOLDER
+							+ PictureUtil.generateFolderPathByTime(time));
+			folder.mkdirs();
+			FileUtil.mkdir(fullImageName);
+			java.io.File f = new java.io.File(fullImageName);
+			FileOutputStream fos = new FileOutputStream(f);
+			fos.write(bytes);
+			fos.close();
+			
+			map.put("err", 0);
+			map.put("msg", "/image/photo.html?imgName="+imageName);
+		}else{
+			map.put("err", 1);
+			map.put("msg", "上传失败");
+		}
+		return map;
+	}
+	/**
+	 * 使用xheditor插件上传
+	 * 返回结构必需为json，并且结构如下：{"err":"","msg":"200906030521128703.gif"}
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/xheditorFileUpload2String" , method = RequestMethod.POST)
+	@Prev(module="FileUploadManager" ,oprator="upload")
+	@ResponseBody
+	public String xheditorFileUpload2(HttpServletRequest request, HttpServletResponse response){
+		ModelMap map=new ModelMap();
+		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(
+				request.getSession().getServletContext());
+		// 设置编码
+		commonsMultipartResolver.setDefaultEncoding("utf-8");
+		try {
+			if (commonsMultipartResolver.isMultipart(request)) {
+				MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+				MultipartFile image = multipartRequest.getFile("filedata");
+				byte[] bytes = image.getBytes();
+				
+				long time = new Date().getTime();
+				String imageName = time + ".png";
+				String fullImageName = PropertyUtils.getProperty("photo.path")
+						+ PictureUtil.IMAGE_UPLOAD_FOLDER
+						+ PictureUtil.generateFolderPathByTime(time) + imageName;
+				java.io.File folder = new java.io.File(
+						PropertyUtils.getProperty("photo.path")
+						+ PictureUtil.IMAGE_UPLOAD_FOLDER
+						+ PictureUtil.generateFolderPathByTime(time));
+				folder.mkdirs();
+				FileUtil.mkdir(fullImageName);
+				java.io.File f = new java.io.File(fullImageName);
+				FileOutputStream fos = new FileOutputStream(f);
+				fos.write(bytes);
+				fos.close();
+				
+				map.put("err", 0);
+				map.put("msg", "/image/photo.html?imgName="+imageName);
+			}else{
+				map.put("err", 1);
+				map.put("msg", "上传失败");
+			}
+		} catch (Exception e) {
+			map.put("err", 1);
+			map.put("msg", "上传失败");
+			e.printStackTrace();
+		}
+		return JSONObject.fromObject(map).toString();
 	}
 	
 	/**

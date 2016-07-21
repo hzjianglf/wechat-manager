@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib uri="/prev-tag" prefix="slp"%>
@@ -14,16 +14,13 @@
 	<%@include file="/WEB-INF/jsp/public/tools.jsp"%>
 
 	<div class="am-cf admin-main">
-		<!-- sidebar start -->
 		<%@include file="/WEB-INF/jsp/index/menu.jsp"%>
-		<!-- sidebar end -->
 
-		<!-- content start -->
 		<div class="admin-content">
 
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-					<small>位置</small>：<small>公司管理中心</small> /<small> <a
+					<small>位置</small>：<small>服务管理中心</small> /<small> <a
 						href="${pageContext.request.contextPath}/service/serviceItemList">服务信息管理</a>
 					</small>/<small>服务信息添加或修改</small>
 				</div>
@@ -33,34 +30,77 @@
 					action="${pageContext.request.contextPath}/service/addServiceItemCommit"
 					class="am-form" data-am-validator>
 					<fieldset>
-						<!-- <legend>JS 表单验证</legend> -->
 
 						<div class="am-form-group">
 							<label for="title">服务名称：</label> <input type="text"
 								id="serviceName" value="${item.serviceName }" name="serviceName"
-								minlength="2" placeholder="输入名称（至少 3 个字符）" required />
+								minlength="3" placeholder="输入名称（至少 3 个字符）" required />
 						</div>
-						<div id="nameMessage" style="color: red; margin-bottom: 12px;"></div>
-
+						<div id="serviceNameMessage" style="color: red; margin-bottom: 12px;"></div>
+						<script type="text/javascript">
+							$(document).ready(function(){
+								console.log("${item.parentId}");
+								$(".selector").val("${item.parentId}");
+								//$(".selector").find("option[text='环境毒理实验']").attr("selected",true);
+							});
+						</script>
+						<div class="am-form-group">
+							<label for="title">服务类型：</label> <select class="selector" id="serviceType" required>
+								<optgroup label="农药">
+									<option value="0">环境毒理实验</option>
+									<option value="1">毒理学检测GLP</option>
+									<option value="2">毒代动力学试验</option>
+								</optgroup>
+								<optgroup label="新化学物质">
+									<option value="3">毒理学检测</option>
+									<option value="4">生态毒理学试验</option>
+								</optgroup>
+								<optgroup label="药品">
+									<option value="5">药物安全性评价</option>
+									<option value="6">药效学研究</option>
+									<option value="7">药代动力学试验</option>
+								</optgroup>
+							</select>
+						</div>
+						<div id="serviceTypeMessage" style="color:red; margin-bottom:12px;"></div>
 						<div class="am-form-group">
 							<label for="content">内容：</label>
-							<textarea id="serviceContent" name="serviceContent" rows="25"
+							<textarea id="serviceContent" name="serviceContent" rows="15"
 								style="width: 100%; border: 1px">${item.serviceContent}</textarea>
 						</div>
-						<div id="nameMessage" style="color: red; margin-bottom: 12px;"></div>
+						<div id="serviceContentMessage" style="color: red; margin-bottom: 12px;"></div>
 						<div class="am-form-group">
-							<label for="positionSalary">图片：</label>
+							<label for="content">优势：</label>
+							<textarea id="serviceAdvantage" name="serviceAdvantage" rows="15"
+								style="width: 100%; border: 1px" required="required">${item.serviceAdvantage}</textarea>
+						</div>
+						<div id="serviceAdvantageMessage" style="color: red; margin-bottom: 12px;"></div>
+						<div class="am-form-group">
+							<script type="text/javascript">
+							jQuery(function(){
+					            UploadPic("imageUrl_pic", "imageUrl_progress", "imageUrl_src", "servicePic");
+					            			//上传按钮------进度条----------------显示照片--------传值(name属性)
+							});
+							</script>
+							
+							<label for="positionSalary">图片：${(item.servicePic eq '') || (item.servicePic eq null)}
+							${(item.servicePic ne '') && (item.servicePic ne null)}</label>
+							<div>
 							<input type="hidden" name="servicePic" id="servicePic" value="${item.servicePic}"/>
 						
-							<!-- 为空时 默认显示的图片 -->
-							<c:if test="${item.servicePic == null}">
-								<img id="serviceImage" src="${item.servicePic}" height="50px" width="50px">
+							<c:if test="${(item.servicePic eq '') || (item.servicePic eq null)}">
+								<img id="imageUrl_src" src="" height="150px" width="150px">
 							</c:if>
-							<c:if test="${item.servicePic != null}">
-								<img id="serviceImage" src="${item.servicePic}" height="50px" width="50px">
+							<c:if test="${(item.servicePic ne '') && (item.servicePic ne null)}">
+								<img id="imageUrl_src" src="/image/photo?imgName=${item.servicePic}" height="150px" width="150px">
 							</c:if>  
- 							<input type="file" id="uploadImage" name="picFile" onchange="ajaxFileUpload()"/>
+ 							
+							<span><input type="file" id="imageUrl_pic" value="上传图片" class="search-button" />（大小不超过1M）</span>
+			    			<div id="imageUrl_progress"></div>
+			    			</div>
 						</div>
+						<div id="servicePicMessage" style="color: red; margin-bottom: 12px;"></div>
+						
 						<div class="am-form-group">
 							<label for="createTime">发布时间：</label> <input type="text"
 								id="createTime"
@@ -81,75 +121,44 @@
 		<!-- content end -->
 		<form action="${pageContext.request.contextPath}/service/serviceItemList"
 			id="sx" method="post">
-			<input type="hidden" name="title" value="${employeeInfo.title}" /> <input
-				type="hidden" name="gender" value="${employeeInfo.author}" /> <input
-				type="hidden" name="currentPage"
-				value="${pageQueryUtil.currentPage}" />
+			<input type="hidden" name="serviceName" value="${itemInfo.serviceName}" />
+			<input type="hidden" name="currentPage" value="${pageQueryUtil.currentPage}" />
 		</form>
 	</div>
 	<%@include file="/WEB-INF/jsp/index/foot.jsp"%>
-	<script  src="${pageContext.request.contextPath}/plugins/xheditor/xheditor-1.2.2.min.js"></script>
-	<script src="${pageContext.request.contextPath}/plugins/ajaxfileupload.js"></script>
 	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
+		$(document).ready(function() {
 							//初始化xhEditor编辑器插件  
-							$('#serviceContent')
-									.xheditor(
+							$('#serviceContent').xheditor(
 											{
 												tools : 'full',
 												skin : 'default',
 												html5Upload : false,
-												upImgUrl : "${pageContext.request.contextPath}/file/xheditorFileUpload",
+												upImgUrl : "${pageContext.request.contextPath}/file/xheditorFileUpload2Map",
 												upImgExt : "jpg,jpeg,gif,bmp,png",
 												onUpload : insertUpload
 											});
 							function insertUpload(msg) {
 								var _msg = msg.toString();
-								
-								var a=30;
-								var b=20;
+								console.log(_msg);
 								$('#serviceContent').append(
-										"<img src='"+_msg+"' id='img' width='"+a+"' height='"+b+"'/>");
+										"<img src='"+_msg+"' id='img' width='"+100+"' height='"+200+"'/>");
 							}
-							//处理服务器返回到回调函数的字符串内容,格式是JSON的数据格式.  
 							function Substring(s) {
 								return s.substring(s.substring(0,
 										s.lastIndexOf("/")).lastIndexOf("/"),
 										s.length);
 							}
+							$('#serviceAdvantage').xheditor(
+									{
+										tools : 'full',
+										skin : 'default',
+										html5Upload : false,
+										upImgUrl : "${pageContext.request.contextPath}/file/xheditorFileUpload2Map",
+										upImgExt : "jpg,jpeg,gif,bmp,png"
+									});
 						});
 		
-		function ajaxFileUpload(){  
-		    
-		    $.ajaxFileUpload({  
-		        //处理文件上传操作的服务器端地址(可以传参数,已亲测可用)  
-		        url:"${pageContext.request.contextPath}/file/ajaxFileUpload",  
-		        secureuri:false,                           //是否启用安全提交,默认为false   
-		        fileElementId:'uploadImage',               //文件选择框的id属性  
-		        dataType:'text',                           //服务器返回的格式,可以是json或xml等  
-		        success:function(data, status){            //服务器响应成功时的处理函数  
-		            data = data.replace(/<pre.*?>/g, '');  //ajaxFileUpload会对服务器响应回来的text内容加上<pre style="....">text</pre>前后缀  
-		            data = data.replace(/<PRE.*?>/g, '');  
-		            data = data.replace("<PRE>", '');  
-		            data = data.replace("</PRE>", '');  
-		            data = data.replace("<pre>", '');  
-		            data = data.replace("</pre>", '');     //本例中设定上传文件完毕后,服务端会返回给前台[0`filepath]  
-		            if(data.substring(0, 1) == 0){         //0表示上传成功(后跟上传后的文件路径),1表示失败(后跟失败描述)
-		                $("img[id='serviceImage']").attr("src", data.substring(2));
-		                
-		                $("#servicePic").val(data.substring(2));
-		                $('#result').html("图片上传成功<br/>");  
-		            }else{  
-		                $('#result').html('图片上传失败，请重试！！');  
-		            }  
-		        },  
-		        error:function(data, status, e){ //服务器响应失败时的处理函数  
-		            $('#result').html('图片上传失败，请重试！！');  
-		        }  
-		    });  
-		}
 		$(function() {
 			$("#submit")
 					.click(
@@ -160,6 +169,7 @@
 								var content = $("#serviceContent").val();
 								var createTime = $("#createTime").val();
 								var pic=$("#servicePic").val();
+								console.log( $('#serviceType option:selected') .val());
 								$
 										.ajax({
 											type : 'post',
@@ -170,33 +180,36 @@
 												serviceName : name,
 												serviceContent : content,
 												servicePic : pic,
-												createTime : createTime
+												createTime : createTime,
+												parentId: $('#serviceType option:selected') .val(),
+												serviceAdvantage:$("#serviceAdvantage").val()
 
 											},
 											url : "${pageContext.request.contextPath}/service/addServiceItemCommit",
 											success : function(data) {
 												if (data.errorFlags) {
-													$("#nameMessage").html("");
-													$("#createTimeMessage")
-															.html("");
-													$("#nameMessage").html(
-															data.nameMessage);
+													$("#serviceNameMessage").html("");
+													$("#parentIdMessage").html("");
+													$("#serviceContentMessage").html("");
+													$("#serviceAdvantageMessage").html("");
+													$("#servicePicMessage").html("");
+													$("#serviceNameMessage").html(data.serviceNameMessage);
+													$("#serviceTypeMessage").html(data.serviceTypeMessage);
+													$("#serviceContentMessage").html(data.serviceContentMessage);
+													$("#serviceAdvantageMessage").html(data.serviceAdvantageMessage);
+													$("#servicePicMessage").html(data.servicePicMessage);
 
-													$("#createTimeMessage")
-															.html(
-																	data.entryTimeMessage);
 
 												} else {
 													amazeAlertSuccess(data.message);
 													window
 															.setTimeout(
 																	function() {
-																		if (id != null
-																				&& id != "") {
-																			$(
-																					"#sx")
-																					.submit();
+																		if (id != null&& id != "") {
+																			console.log("gt'");
+																			$("#sx").submit();
 																		} else {
+																			console.log("we");
 																			window.location.href = "${pageContext.request.contextPath}/service/serviceItemList";
 																		}
 

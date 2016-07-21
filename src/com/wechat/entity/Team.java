@@ -4,11 +4,11 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -33,18 +33,22 @@ public class Team implements Serializable{
 	private Integer id;
 	
 	@NotNull("团队名称")
-	@Str(minLength = 2, maxLength = 25, mesName = "团队名称")
+	@Str(minLength = 3, maxLength = 40, mesName = "团队名称")
 	private String teamName;
-	
+	@NotNull("技术团队信息")
+	@Str(mesName="团队信息")
 	private String teamInfo;
-	
+	@NotNull("图片")
 	private String teamPic;
 	
 	private Integer createUser;
-	
+	@NotNull("时间")
 	private Timestamp createTime;
 	
 	private Integer isDel;
+	@NotNull("描述")
+	@Str(mesName="团队描述",maxLength=40)
+	private String teamDescription;
 
 	
 	@Id
@@ -110,6 +114,15 @@ public class Team implements Serializable{
 
 	public void setTeamPic(String teamPic) {
 		this.teamPic = teamPic;
+	}
+
+	@Column(name="team_description")
+	public String getTeamDescription() {
+		return teamDescription;
+	}
+
+	public void setTeamDescription(String teamDescription) {
+		this.teamDescription = teamDescription;
 	}
 	
 	

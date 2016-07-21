@@ -15,14 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.wechat.entity.Company;
-import com.wechat.entity.Honor;
 import com.wechat.entity.User;
 import com.wechat.menu.Module;
 import com.wechat.prev.Prev;
@@ -36,8 +34,8 @@ import com.wechat.util.StringTools;
 import com.wechat.validate.Validate;
 
 @Controller
-@RequestMapping("/company")
-@Module("CompanyManager")
+@RequestMapping("/about_us/company")
+@Module("AboutUs")
 public class CompanyController extends BaseController {
 
 	private static final Log4jLogger log = Log4jLogger

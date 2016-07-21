@@ -7,9 +7,10 @@
 			<param name="ConversionPattern" value="[%p] %d [%c{1}.%M] - %m%n" />
 		</layout>
 	</appender>
-
+	
+	<!-- 生成tomcat根目录下的wechat-manager-log文件夹下的日志 -->
 	<appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="./../OA/sysError/error.log" />
+		<param name="File" value="./../wechat-manager-log/sysError/error.log" />
 		<param name="encoding" value="utf-8" />
 		<param name="Threshold" value="ERROR" />
 		<param name="Append" value="true" />
@@ -20,7 +21,7 @@
 	</appender>
 
 	<appender name="userLoginInfo" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="./../OA/userLogin/loginlog.log" />
+		<param name="File" value="./../wechat-manager-log/userLogin/loginlog.log" />
 		<param name="encoding" value="utf-8" />
 		<param name="Threshold" value="INFO" />
 		<param name="Append" value="true" />
@@ -53,7 +54,7 @@
 		<level value="INFO" />
 	</logger>
 
-	<logger name="com.znkhb.contorller.UserController">
+	<logger name="com.wechat.contorller.UserController">
 		<level value="INFO" />
 		<appender-ref ref="userLoginInfo" />
 	</logger>

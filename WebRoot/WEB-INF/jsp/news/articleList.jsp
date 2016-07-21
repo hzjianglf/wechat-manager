@@ -23,7 +23,7 @@
 			
 			<div class="am-cf am-padding">
 				<div class="am-fl am-cf">
-      				<small>位置</small>：<small>公司管理中心</small>/<small>文章信息管理</small>
+      				<small>位置</small>：<small>新闻活动</small>/<small>新闻信息管理</small>
       			</div>
 			</div>
 			<form action="${pageContext.request.contextPath}/article/articleList" method="post" id="form1" class="am-form">
@@ -38,7 +38,7 @@
    				<div class="am-u-lg-3">
 				    <div class="am-input-group am-input-group-secondary am-form-group">
 				      <span class="am-input-group-label">名称</span>
-				      <input type="text" name="title" placeholder="名称" value="${c.title}" class="am-form-field"/>
+				      <input type="text" name="title" placeholder="名称" value="${news.title}" class="am-form-field"/>
 				    </div>
 				 </div>
 				 
@@ -51,7 +51,7 @@
 			</div>
     		</form>
     		<form action="${pageContext.request.contextPath}/article/articleList" method="post" id="form2">
-    			<input type="hidden" name="title" value="${honorInfo.title}" />
+    			<input type="hidden" name="title" value="${news.title}" />
     			<input type="hidden" id="currentPage2" name="currentPage" value="1" />
     		</form>
 			<div class="am-g">
@@ -65,6 +65,7 @@
 									<th>主题图片</th>
 									<th>作者</th>
 									<th>创建时间</th>
+									<th>新闻类型</th>
 									<th>状态</th>
 									<th class="table-set">操作</th>
 								</tr>
@@ -74,12 +75,23 @@
 									<tr>
 										<td>${status.index + (page.currentPage - 1)*page.pageSize + 1}</td>
 										<td>${p.title}</td>
-										<td><img src="${p.pic}" width="80px" height="60px"/></td>
+										<c:choose>
+											<c:when test="${p.pic ne null && p.pic ne '' }">
+												<td><img src="${pageContext.request.contextPath }/image/photo?imgName=${p.pic}" width="80px" height="60px"/></td>											
+											</c:when>
+											<c:otherwise>
+												<td>无</td>
+											</c:otherwise>
+										</c:choose>
 										<td>${p.author}</td>
 										<td><fmt:formatDate value="${p.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 										<td>
-											<c:if test="${p.isShow==0 }">显示</c:if>
-											<c:if test="${p.isShow==1 }">不显示</c:if>
+											<c:if test="${p.newsType==1 }">公司新闻</c:if>
+											<c:if test="${p.newsType==2 }">学术新闻</c:if>
+										</td>
+										<td>
+											<c:if test="${p.isDel==0 }">显示</c:if>
+											<c:if test="${p.isDel==1 }">不显示</c:if>
 											
 										</td>
 										<td>

@@ -12,7 +12,42 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/amazeui.min.css"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/validateCss.css"/>
+  <link href="${pageContext.request.contextPath}/plugins/uploadify/uploadify.css" rel="stylesheet">
   <script src="${pageContext.request.contextPath}/plugins/jquery/jquery-1.9.1.min.js"></script>
   <script src="${pageContext.request.contextPath}/plugins/amazeui.min.js"></script>
   <script src="${pageContext.request.contextPath}/plugins/validateJs.js"></script>
   <script src="${pageContext.request.contextPath}/plugins/My97DatePicker/WdatePicker.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/plugins/uploadify/jquery.uploadify.min.js" ></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/plugins/uploadify/uploadify.js" ></script>
+  <script src="${pageContext.request.contextPath}/plugins/xheditor/xheditor-1.2.2.min.js"></script>
+  <script src="${pageContext.request.contextPath}/plugins/ajaxfileupload.js"></script>
+<%String context_sys=request.getContextPath(); %>
+<%String sessionId=request.getSession().getId(); %>
+<script>
+window.sys="<%=context_sys%>";
+window.sessionid="<%=sessionId%>";
+var el_path="${pageContext.request.contextPath}";
+console.log("el:"+el_path);
+</script>
+
+	<%-- <c:set var="contextPath" value="${pageContext.request.contextPath}" scope="application"/>  
+    <script>  
+        JS gloable varilible  
+        var contextPath = "${contextPath}";
+        console.log("@@"+contextPath);
+    </script> --%>
+<%	String sessionIds=request.getSession().getId();
+	String path=request.getRealPath("/"); 
+	String path1=this.getServletContext().getRealPath("/"); 
+	String pp=request.getContextPath();
+%>
+<script type="text/javascript">
+	sessionid ="<%=sessionIds%>";
+	console.log(sessionid);
+	sys1="<%=pp%>";
+	console.log(sys1);
+<%-- console.log("<%=path%>");
+console.log("<%=path1%>"); 这两个都是绝对路径--%>
+
+	console.log('${pageContext.request.contextPath}');
+</script>

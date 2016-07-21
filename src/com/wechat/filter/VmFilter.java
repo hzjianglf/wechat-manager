@@ -15,10 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.velocity.app.Velocity;
 
 /**
- * @author liufeng
  * 
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * @Description 过滤器VmFilter 主要是对HttpServletRequest进行预处理
+ * 1,在request到达Servlet之前，拦截客户的HttpServletRequest
+ * 2,根据需要检查HttpServletRequest,也可以修改HttpServletRequest头和数据
+ * 3,在HttpServletResponse到达客户端之前，拦截HttpServletResponse
+ * 4,根据需要检查HttpServletResponse,也可以修改HttpServletResponse头和数据
+ * @ClassName VmFilter.java
+ * @author Administrator-zhur
+ * @date 2016年7月21日下午2:05:16
  */
 public class VmFilter implements Filter {
 

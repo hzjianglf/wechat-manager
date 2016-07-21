@@ -26,12 +26,12 @@
       				<small>位置</small>：<small>公司管理中心</small>/<small>技术团队信息管理</small>
       			</div>
 			</div>
-			<form action="${pageContext.request.contextPath}/team/teamList" method="post" id="form1" class="am-form">
+			<form action="${pageContext.request.contextPath}/about_us/team/teamList" accept-charset="utf-8" method="post" id="form1" class="am-form">
     		<div class="am-g">
     			<slp:privilege module="TeamManager" oprator="add">
    				<div class="am-u-lg-2">
 				    <div class="am-input-group am-input-group-secondary am-form-group">
-				      <a href="${pageContext.request.contextPath}/team/addTeamInfo"><span class="am-input-group-label">新增</span></a>
+				      <a href="${pageContext.request.contextPath}/about_us/team/addTeamInfo"><span class="am-input-group-label">新增</span></a>
 				    </div>
 				 </div>
 				 </slp:privilege>
@@ -50,7 +50,7 @@
 				 </div>
 			</div>
     		</form>
-    		<form action="${pageContext.request.contextPath}/team/teamList" method="post" id="form2">
+    		<form action="${pageContext.request.contextPath}/about_us/team/teamList" method="post" id="form2">
     			<input type="hidden" name="teamName" value="${teamInfo.teamName}" />
     			<input type="hidden" id="currentPage2" name="currentPage" value="1" />
     		</form>
@@ -74,7 +74,14 @@
 									<tr>
 										<td>${status.index + (page.currentPage - 1)*page.pageSize + 1}</td>
 										<td>${p.teamName}</td>
-										<td><img src="${p.teamPic}" width="80px" height="60px"/></td>
+										<c:choose>
+										<c:when test="${p.teamPic ne '' && p.teamPic ne null}">
+											<td><img src="/image/photo?imgName=${p.teamPic}" width="80px" height="60px"/></td>										
+										</c:when>
+										<c:otherwise>
+											<td>没有</td>
+										</c:otherwise>										
+										</c:choose>
 										<td>${p.userName}</td>
 										<td><fmt:formatDate value="${p.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 										<td>
@@ -149,7 +156,7 @@
 				data : {
 					id : id
 				},
-				url : "${pageContext.request.contextPath}/team/deleteTeamInfo",
+				url : "${pageContext.request.contextPath}/about_us/team/deleteTeamInfo",
 				success : function(data) {
 					if (data.errorFlags) {
 						amazeAlertSuccess(data.message);
@@ -197,7 +204,7 @@
 			
 			$(".bj").click(function(){
 				var id = $(this).attr("name");
-				var url = "${pageContext.request.contextPath}/team/updateTeamInfo?id=" + id;
+				var url = "${pageContext.request.contextPath}/about_us/team/updateTeamInfo?id=" + id;
 				var cname = "${teamInfo.teamName}";
 				var ccp = "${page.currentPage}";
 				

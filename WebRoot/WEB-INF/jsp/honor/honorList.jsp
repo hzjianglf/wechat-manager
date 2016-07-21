@@ -26,19 +26,19 @@
       				<small>位置</small>：<small>荣誉管理中心</small>/<small>荣誉信息管理</small>
       			</div>
 			</div>
-			<form action="${pageContext.request.contextPath}/honor/honorList" method="post" id="form1" class="am-form">
+			<form action="${pageContext.request.contextPath}/about_us/honor/honorList" method="post" id="form1" class="am-form">
     		<div class="am-g">
     			<slp:privilege module="HrManager" oprator="add">
    				<div class="am-u-lg-2">
 				    <div class="am-input-group am-input-group-secondary am-form-group">
-				      <a href="${pageContext.request.contextPath}/honor/addHonorInfo"><span class="am-input-group-label">新增</span></a>
+				      <a href="${pageContext.request.contextPath}/about_us/honor/addHonorInfo"><span class="am-input-group-label">新增</span></a>
 				    </div>
 				 </div>
 				 </slp:privilege>
    				<div class="am-u-lg-3">
 				    <div class="am-input-group am-input-group-secondary am-form-group">
 				      <span class="am-input-group-label">标题</span>
-				      <input type="text" name="title" placeholder="标题" value="${honorInfo.title}" class="am-form-field"/>
+				      <input type="text" name="title" placeholder="标题" value="" class="am-form-field"/>
 				    </div>
 				 </div>
 				 
@@ -50,8 +50,8 @@
 				 </div>
 			</div>
     		</form>
-    		<form action="${pageContext.request.contextPath}/honor/honorList" method="post" id="form2">
-    			<input type="hidden" name="title" value="${honorInfo.title}" />
+    		<form action="${pageContext.request.contextPath}/about_us/honor/honorList" method="post" id="form2">
+    			<input type="hidden" name="title" value="" />
     			<input type="hidden" id="currentPage2" name="currentPage" value="1" />
     		</form>
 			<div class="am-g">
@@ -74,7 +74,14 @@
 									<tr>
 										<td>${status.index + (page.currentPage - 1)*page.pageSize + 1}</td>
 										<td>${p.title}</td>
-										<td><img src="${p.pic}" width="80px" height="60px"/></td>
+										<c:choose>
+											<c:when test="${p.pic ne null && p.pic ne ''}">
+												<td><img src="/image/photo?imgName=${p.pic}" width="80px" height="60px"/></td>											
+											</c:when>
+											<c:otherwise>
+												<td></td>
+											</c:otherwise>
+										</c:choose>
 										<td>${p.userName}</td>
 										<td><fmt:formatDate value="${p.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 										<td>
@@ -149,7 +156,7 @@
 				data : {
 					id : id
 				},
-				url : "${pageContext.request.contextPath}/honor/deleteHonorInfo",
+				url : "${pageContext.request.contextPath}/about_us/honor/deleteHonorInfo",
 				success : function(data) {
 					if (data.errorFlags) {
 						alert(1);
@@ -198,7 +205,7 @@
 			
 			$(".bj").click(function(){
 				var id = $(this).attr("name");
-				var url = "${pageContext.request.contextPath}/honor/updateHonorInfo?id=" + id;
+				var url = "${pageContext.request.contextPath}/about_us/honor/updateHonorInfo?id=" + id;
 				var cname = "${honorInfo.title}";
 				var ccp = "${page.currentPage}";
 				

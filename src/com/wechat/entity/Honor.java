@@ -8,9 +8,10 @@ import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.wechat.validate.NotNull;
 
 /**
  * 荣誉表
@@ -29,10 +30,11 @@ public class Honor implements Serializable{
 	
 	private Long id;
 	
+	@NotNull("标题")
 	private String title;
-	
+	@NotNull("内容")
 	private String content;
-	
+	@NotNull("图片")
 	private String pic;
 	
 	private Integer createUser;

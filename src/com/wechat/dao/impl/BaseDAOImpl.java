@@ -42,15 +42,23 @@ public class BaseDAOImpl implements BaseDAO {
 	private @Qualifier("sessionFactory")
 	SessionFactory sessionFactory;
 
-	private Session getCurrentSession() {
+	/*private Session getCurrentSession() {
+		return sessionFactory.getCurrentSession();
+	}*/
+	public Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
 	}
 
+	
 	private void flushAndClear() {
 		this.getCurrentSession().flush();
 		this.getCurrentSession().clear();
 	}
 
+	public Query sqlQuery(String sql){
+		Query query= getCurrentSession().createSQLQuery(sql);
+		return query;
+	}
 	public Serializable save(Object o) {
 		return this.getCurrentSession().save(o);
 	}

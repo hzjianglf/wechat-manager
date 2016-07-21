@@ -101,7 +101,7 @@ public class NoticeServiceImpl extends BaseServiceImpl implements NoticeService 
 		Map<String, Object> mapPage;
 
 		if (status == Constrants.READ_ALL) {
-			hql2 = "select new com.oa.bean.NoticeBean(n.id, n.title, u.nickName, n.createTime, n.userId) "
+			hql2 = "select new com.wechat.bean.NoticeBean(n.id, n.title, u.nickName, n.createTime, n.userId) "
 					+ "from SysNotice n, User u where n.userId=u.id and n.status=? and n.isDel=? order by n.createTime desc";
 			mapPage = backPage(hql2, page, Constrants.DATA_PUBLISH,
 					Constrants.DATA_NOT_DEL);
@@ -132,7 +132,7 @@ public class NoticeServiceImpl extends BaseServiceImpl implements NoticeService 
 					map.put("ids", noticeIds);
 				}
 			}
-			hql2 = "select new com.oa.bean.NoticeBean(n.id, n.title, u.nickName, n.createTime) "
+			hql2 = "select new com.wechat.bean.NoticeBean(n.id, n.title, u.nickName, n.createTime) "
 					+ "from SysNotice n, User u where n.userId=u.id and n.status=? and n.isDel=? "
 					+ chql + " order by n.createTime desc";
 			mapPage = backPageHasMap(hql2, page, map, Constrants.DATA_PUBLISH,

@@ -5,6 +5,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
+
 public class MyDateUtil {
 
 	/**
@@ -13,9 +15,11 @@ public class MyDateUtil {
 	 * @return
 	 */
 	public static Timestamp stringToTimestamp(String dateStr){
-		Timestamp ts=new Timestamp(System.currentTimeMillis());
-		
-		ts=Timestamp.valueOf(dateStr);
+		//Timestamp ts=new Timestamp(System.currentTimeMillis());
+		Timestamp ts=null;
+		if(!StringUtils.isEmpty(dateStr)){
+			ts=Timestamp.valueOf(dateStr);			
+		}
 		
 		//DateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		

@@ -38,7 +38,7 @@ import com.wechat.validate.Validate;
 
 @Controller
 @RequestMapping("/article")
-@Module("ArticleManager")
+@Module("Newss")
 public class ArticleController extends BaseController {
     
 	private static final Log4jLogger log = Log4jLogger
@@ -135,7 +135,7 @@ public class ArticleController extends BaseController {
 	@RequestMapping("/articleList")
 	@Prev(module="articleInfoList",oprator="all")
 	public ModelAndView articleList(Article article,PageQueryUtil page) throws Exception {
-		return backView("home/articleList", articleService.findArticlesByPage(article, page));
+		return backView("news/articleList", articleService.findArticlesByPage(article, page));
 	}
 
 	
@@ -155,9 +155,9 @@ public class ArticleController extends BaseController {
 			if (article.getTitle() != null) {
 				article.setTitle(new String(article.getTitle().getBytes("iso-8859-1"),"UTF-8"));
 			}
-			return new ModelAndView("home/addArticleInfo", "article",
+			return new ModelAndView("news/addArticleInfo", "article",
 					articleService.get(Article.class, id)).addObject(
-					"companyInfo", article).addObject("pageQueryUtil", page);
+					"news", article).addObject("pageQueryUtil", page);
 		} catch (Exception e) {
 			log.error("updateArticle error", e);
 			throw e;
@@ -211,7 +211,7 @@ public class ArticleController extends BaseController {
 	@RequestMapping("/addArticles")
 	@Prev(module = "ArticleManager", oprator = "add")
 	public String addArticle() {
-		return "home/addArticleInfo";
+		return "news/addArticleInfo";
 	}
 	
 	/**

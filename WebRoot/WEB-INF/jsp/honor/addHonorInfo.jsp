@@ -58,7 +58,7 @@
 							<input type="hidden" name="honorPic" id="pic" value="${info.pic}"/>
 						
 							<c:if test="${info.pic != '' && info.pic ne null}">
-								<img id="imageUrl_src" src="/image/photo?imgName=${info.pic}" height="150px" width="150px">
+								<img id="imageUrl_src" src="${pageContext.request.contextPath}/image/photo?imgName=${info.pic}" height="150px" width="150px">
 							</c:if>  
 							<c:if test="${info.pic == '' || info.pic eq null}">
 								<img id="imageUrl_src" src="" height="150px" width="150px">

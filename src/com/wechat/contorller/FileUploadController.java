@@ -117,7 +117,7 @@ public class FileUploadController extends BaseController{
 			fos.close();
 			
 			map.put("err", 0);
-			map.put("msg", "/image/photo.html?imgName="+imageName);
+			map.put("msg", request.getContextPath()+"/image/photo.html?imgName="+imageName);
 		}else{
 			map.put("err", 1);
 			map.put("msg", "上传失败");
@@ -163,7 +163,7 @@ public class FileUploadController extends BaseController{
 				fos.close();
 				
 				map.put("err", 0);
-				map.put("msg", "/image/photo.html?imgName="+imageName);
+				map.put("msg", request.getContextPath()+"/image/photo.html?imgName="+imageName);
 			}else{
 				map.put("err", 1);
 				map.put("msg", "上传失败");

@@ -56,7 +56,7 @@
 							<input class="" type="hidden" id="J_imageUrl" name="imageUrl" value="${info.organizePic}"  />
 						
 							<c:if test="${info.organizePic != '' && info.organizePic ne null}">
-			    			<img id="J_imageUrl_src" src="/image/photo?imgName=${info.organizePic}"  width="176" height="126" />
+			    			<img id="J_imageUrl_src" src="${pageContext.request.contextPath}/image/photo?imgName=${info.organizePic}"  width="176" height="126" />
 			    			</c:if>
 							<c:if test="${info.organizePic == '' || info.organizePic eq null}">
 			    			<img id="J_imageUrl_src" src=""  width="176" height="126" />

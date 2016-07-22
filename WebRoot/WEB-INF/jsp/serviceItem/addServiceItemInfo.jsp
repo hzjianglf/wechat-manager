@@ -83,8 +83,7 @@
 							});
 							</script>
 							
-							<label for="positionSalary">图片：${(item.servicePic eq '') || (item.servicePic eq null)}
-							${(item.servicePic ne '') && (item.servicePic ne null)}</label>
+							<label for="positionSalary">图片：</label>
 							<div>
 							<input type="hidden" name="servicePic" id="servicePic" value="${item.servicePic}"/>
 						
@@ -92,7 +91,7 @@
 								<img id="imageUrl_src" src="" height="150px" width="150px">
 							</c:if>
 							<c:if test="${(item.servicePic ne '') && (item.servicePic ne null)}">
-								<img id="imageUrl_src" src="/image/photo?imgName=${item.servicePic}" height="150px" width="150px">
+								<img id="imageUrl_src" src="${pageContext.request.contextPath}/image/photo?imgName=${item.servicePic}" height="150px" width="150px">
 							</c:if>  
  							
 							<span><input type="file" id="imageUrl_pic" value="上传图片" class="search-button" />（大小不超过1M）</span>

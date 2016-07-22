@@ -22,7 +22,7 @@
     	console.log(window.sessionid);
     	
     	$("#"+button).uploadify({
-            'swf':"../plugins/uploadify/uploadify.swf", //flash文件的相对路径
+            'swf':window.sys+"/plugins/uploadify/uploadify.swf", //flash文件的相对路径
             'uploader':window.sys+'/image/uploadify2String;jsessionid='+window.sessionid,
             'fileObjName':'upFile', //设置上传文件名称,默认为Filedata
             'queueID':progress, //文件队列的ID，该ID与存放文件队列的div的ID一致

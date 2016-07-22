@@ -71,7 +71,7 @@
 										<td>${p.organizeName}</td>
 										<c:choose>
 											<c:when test="${p.organizePic ne '' && p.organizePic ne null }">
-												<td><img src="/image/photo?imgName=${p.organizePic}" width="80px" height="60px"/></td>											
+												<td><img src="${pageContext.request.contextPath}/image/photo?imgName=${p.organizePic}" width="80px" height="60px"/></td>											
 											</c:when>
 											<c:otherwise>
 												<td>无</td>

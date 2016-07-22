@@ -48,8 +48,12 @@
 
 		<!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计 -->
 		<property name="filters" value="stat" />
+		
+		<property name="connectionProperties" value="db.password=${db.password}"/>
+		<property name="passwordCallback">
+			<bean class="com.wechat.db.config.DbPasswordCallback"></bean>
+		</property>
 	</bean>
-
 	<!-- session工厂 -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">

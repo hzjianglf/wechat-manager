@@ -76,7 +76,7 @@
 										<td>${p.teamName}</td>
 										<c:choose>
 										<c:when test="${p.teamPic ne '' && p.teamPic ne null}">
-											<td><img src="/image/photo?imgName=${p.teamPic}" width="80px" height="60px"/></td>										
+											<td><img src="${pageContext.request.contextPath}/image/photo?imgName=${p.teamPic}" width="80px" height="60px"/></td>										
 										</c:when>
 										<c:otherwise>
 											<td>没有</td>

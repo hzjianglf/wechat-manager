@@ -71,7 +71,7 @@
 										<td>${p.laboratoryName}</td>
 										<c:choose>
 											<c:when test="${p.laboratoryPic ne null && p.laboratoryPic ne '' }">
-												<td><img src="/image/photo?imgName=${p.laboratoryPic}" width="80px" height="60px"/></td>											
+												<td><img src="${pageContext.request.contextPath}/image/photo?imgName=${p.laboratoryPic}" width="80px" height="60px"/></td>											
 											</c:when>
 											<c:otherwise>
 												<td>无图片信息</td>

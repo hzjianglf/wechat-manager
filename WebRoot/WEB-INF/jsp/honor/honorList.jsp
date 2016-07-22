@@ -76,7 +76,7 @@
 										<td>${p.title}</td>
 										<c:choose>
 											<c:when test="${p.pic ne null && p.pic ne ''}">
-												<td><img src="/image/photo?imgName=${p.pic}" width="80px" height="60px"/></td>											
+												<td><img src="${pageContext.request.contextPath}/image/photo?imgName=${p.pic}" width="80px" height="60px"/></td>											
 											</c:when>
 											<c:otherwise>
 												<td></td>

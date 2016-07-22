@@ -73,7 +73,7 @@
 										<td>${p.serviceName}</td>
 										<c:choose>
 											<c:when test="${(p.servicePic ne '') &&(p.servicePic ne null) }">
-												<td><img src="/image/photo?imgName=${p.servicePic}" width="80px" height="60px"/></td>
+												<td><img src="${pageContext.request.contextPath}/image/photo?imgName=${p.servicePic}" width="80px" height="60px"/></td>
 											</c:when>
 											<c:otherwise>
 												<td>没有图片信息</td>
@@ -224,7 +224,8 @@
 		
 		$(".cas").click(function(){
 			var id=$(this).attr("name");
-			var url="/service/bindCases/"+id;
+			console.log(window.sys);
+			var url=window.sys+"/service/bindCases/"+id;
 			window.location.href=url;
 		});
 	</script>

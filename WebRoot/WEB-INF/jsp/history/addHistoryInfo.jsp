@@ -78,7 +78,7 @@
 								<img id="imageUrl_ser" src="" height="150px" width="150px">
 							</c:if>
 							<c:if test="${info.historyPic != '' && info.historyPic ne null}">
-								<img id="imageUrl_src" src="/image/photo?imgName=${info.historyPic}" height="150px" width="150px">
+								<img id="imageUrl_src" src="${pageContext.request.contextPath}/image/photo?imgName=${info.historyPic}" height="150px" width="150px">
 							</c:if>  
 							<span><input type="file" id="imageUrl_pic" value="上传图片" class="search-button" />（大小不超过1M）</span>
 			    			<div id="imageUrl_progress"></div>

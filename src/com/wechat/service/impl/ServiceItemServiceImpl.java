@@ -25,7 +25,7 @@ public class ServiceItemServiceImpl extends BaseServiceImpl implements
 	public Map<String, Object> findServiceItemByPage(ServiceItem item,
 			PageQueryUtil page) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select s.id,s.service_name serviceName,u.user_name userName,s.service_content serviceContent,s.service_pic servicePic,s.create_time createTime,s.is_del isDel  from weixin_service_item s left join sys_user u")
+		sql.append("select s.id,s.service_name serviceName,u.user_name userName,s.service_content serviceContent,s.service_pic servicePic,s.create_time createTime,s.is_del isDel  from portal_serviceitem s left join sys_user u")
 		.append(" on u.id=s.create_user")
 		.append(" where s.is_del=?");
 		List<Object> list = new ArrayList<Object>();
@@ -48,7 +48,7 @@ public class ServiceItemServiceImpl extends BaseServiceImpl implements
 
 	@Override
 	public List<Case> queryCaseByServiceId(int serviceId) {
-		String sql="select psc.case_name caseName,psc.id id from service_case sc,portal_service_case psc where psc.id=sc.case_id and sc.service_id=?";
+		String sql="select psc.case_name caseName,psc.id id from portal_service_case sc,portal_case psc where psc.id=sc.case_id and sc.service_id=?";
 		Query query=getBaseDao().sqlQuery(sql);
 		query.setParameter(0, serviceId);
 		List<Case> listcase=query.list();
@@ -57,7 +57,7 @@ public class ServiceItemServiceImpl extends BaseServiceImpl implements
 
 	@Override
 	public List<Case> queryNotBindCaseByServiceId(int serviceId) {
-		String sql="select id,case_name from portal_service_case where id not in(select case_id from service_case where service_id=?)";
+		String sql="select id,case_name from portal_case where id not in(select case_id from portal_service_case where service_id=?)";
 		Query query=getBaseDao().sqlQuery(sql);
 		query.setParameter(0, serviceId);
 		List<Case> listcase=query.list();

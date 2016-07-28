@@ -1,19 +1,10 @@
 package com.wechat.contorller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.wechat.entity.Case;
@@ -58,82 +46,6 @@ public class ServiceItemController extends BaseController {
 
 	@Resource
 	private CaseService caseService;
-	
-	@RequestMapping(value="/xheditorFileUpload" , method = RequestMethod.POST)
-	@Prev(module="ServiceItemManager" ,oprator="all")
-	public void xheditorFileUpload(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		ServletOutputStream out = response.getOutputStream();
-        request.setCharacterEncoding( "utf-8" );
-        response.setHeader("Content-Type" , "text/html");
-        
-        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(
-                request.getSession().getServletContext());
-        // 设置编码
-        commonsMultipartResolver.setDefaultEncoding("utf-8");
-        if (commonsMultipartResolver.isMultipart(request)) {
-            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-            MultipartFile image = multipartRequest.getFile("filedata");
-            String url = "images"+File.separator+MyDateUtil.dateToString(new Date(), "yyyyMMdd")+File.separator;
-            //这里可以从项目中取得你项目根目录的地址
-            //怎样 访问 应用目录外的资源文件
-/*            String filePath = request.getSession().getServletContext().getRealPath("/")+"/upload/";*/
-            //String filePath = "D:/opt"+"/pic/";
-            String filePath=request.getSession().getServletContext().getRealPath("/");
-            String newPath=filePath.substring(0, filePath.indexOf("\\wechat-manager"));
-            //filePath.replace("wechat-manager", "ROOT");
-            newPath+="/ROOT/upload/";
-            Random r = new Random();
-            if(image != null && !image.isEmpty()){
-                InputStream xtins = image.getInputStream();
-                String hj = new String(image.getOriginalFilename().getBytes("ISO-8859-1"),"UTF-8");
-                hj = hj.split("\\.")[1];
-                //这里用来生成文件名
-                String fileName = MyDateUtil.dateToString(new Date(), "yyyyMMddHHmmss")+r.nextInt(1000)+"."+hj;
-                saveInputStreamToFile(newPath, fileName, xtins);
-                //这里是用来返回给xheditor的
-/*                out.print("{'err':'','msg':'"+ (request.getContextPath() + "/upload/" +fileName).replace("\\", "/")+"'}");
-*/               // out.print("{'err':'','msg':'"+ ("D:/opt" + "/pic/" +fileName).replace("\\", "/")+"'}");
-                out.print("{'err':'','msg':'"+ ("../../upload/" +fileName).replace("\\", "/")+"'}");
-                
-            }
-        }
-	}
-	/**
-     * 保存文件流到指定路径
-     * @param filePath
-     * @param fileName
-     * @param inputStream
-     * @throws Exception
-     */
-    public void saveInputStreamToFile(String filePath, String fileName,
-            InputStream inputStream) throws Exception {
-        OutputStream os = null;
-        try {
-            File forder = new File(filePath);
-            if (!forder.exists()) {
-                forder.mkdir();
-            }
-            File file = new File(filePath + fileName);
-            os = new FileOutputStream(file);
-            int bytesRead = 0;
-            byte[] buffer = new byte[8192];
-            while ((bytesRead = inputStream.read(buffer, 0, 8192)) != -1) {
-                os.write(buffer, 0, bytesRead);
-            }
-            os.close();
-            inputStream.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw ex;
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-            if (os != null) {
-                os.close();
-            }
-        }
-    }
 	
 	@RequestMapping("/serviceItemList")
 	@Prev(module="serviceItemList",oprator="all")
@@ -239,11 +151,10 @@ public class ServiceItemController extends BaseController {
 	@Prev(module = "ServiceItemManager", oprator = "bind")
 	public ModelAndView bindCases(@PathVariable int serviceId,PageQueryUtil page){
 		
-		//未绑定案例
 		List<Case> notBindCase=serviceItemService.queryNotBindCaseByServiceId(serviceId);
-		//已经绑定的案例
+		
 		List<Case> bindCase=serviceItemService.queryCaseByServiceId(serviceId);
-		//return "serviceItem/bindServiceCases";
+
 		return new ModelAndView("serviceItem/bindServiceCases","notBindCase",notBindCase).addObject("bindCase", bindCase)
 				.addObject("serviceId", serviceId).addObject("pageQueryUtil", page);
 	}
@@ -253,12 +164,17 @@ public class ServiceItemController extends BaseController {
 	@Prev(module = "ServiceItemManager", oprator = "bind")
 	@ResponseBody
 	public ModelMap bindServiceCaseCommit(@PathVariable int serviceId,@RequestParam("arrays[]") String[] arr){
-		Map map=new HashMap();
+		Map<String,Object> map=new HashMap<String,Object>();
 		map.put("serviceId", serviceId);
 		map.put("arrays", arr);
 		boolean result=caseService.updateBindCaseByServiceId(map);
+		
 		ModelMap m=new ModelMap();
-		m.put(Constrants.MESSAGE_TIP, "操作成功！");
+		if(result){
+			
+			m.put(Constrants.MESSAGE_TIP, "操作成功！");
+		}else{
+		}
 		return m;
 	}
 	

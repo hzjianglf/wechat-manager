@@ -4,7 +4,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +21,7 @@ import com.wechat.validate.Str;
  * @date 2016年6月6日 上午10:18:47
  */
 @Entity
-@Table(name="weixin_team",catalog="wechat")
+@Table(name="portal_team",catalog="wechat")
 public class Team implements Serializable{
 
 	/**

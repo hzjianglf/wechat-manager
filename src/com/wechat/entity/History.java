@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import com.wechat.validate.NotNull;
 
 @Entity
-@Table(name="portal_us_history",catalog="wechat")
+@Table(name="portal_history",catalog="wechat")
 public class History implements Serializable{
 
 	/**

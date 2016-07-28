@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * @date 2016年6月15日下午3:55:36
  */
 @Entity
-@Table(name="service_case",catalog="wechat")
+@Table(name="portal_service_case",catalog="wechat")
 public class ServiceCase implements Serializable{
 
 	/**

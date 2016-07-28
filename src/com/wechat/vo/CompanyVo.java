@@ -1,7 +1,6 @@
 package com.wechat.vo;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 
 public class CompanyVo implements Serializable {

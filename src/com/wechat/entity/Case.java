@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(catalog="wechat",name="portal_service_case")
+@Table(catalog="wechat",name="portal_case")
 public class Case implements Serializable{
 
 	/**

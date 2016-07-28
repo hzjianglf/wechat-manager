@@ -48,21 +48,6 @@ public class CaseServiceImpl extends BaseServiceImpl implements
 		return getBaseDao().getAll(Case.class);
 	}
 
-
-	public boolean updateBindCaseByServiceId0(Map map) {
-		Integer serviceId=(Integer) map.get("serviceId");
-		String [] arrays=new String[]{};
-				arrays=(String[]) map.get("arrays");
-		String sql="update service_case set case_id=? where service_id=?";
-		//return getBaseDao().executeHql(sql, map);
-		for(int i=0;i<arrays.length;i++){
-			Query q=getBaseDao().sqlQuery(sql);
-			q.setParameter(0, arrays[i]);
-			q.setParameter(1, serviceId);
-			q.executeUpdate();
-		}
-		return true;
-	}
 	@Override
 	public boolean updateBindCaseByServiceId(Map map) {
 		Integer serviceId=(Integer) map.get("serviceId");

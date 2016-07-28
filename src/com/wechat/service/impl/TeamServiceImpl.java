@@ -28,7 +28,7 @@ public class TeamServiceImpl extends BaseServiceImpl implements
 	public Map<String, Object> findTeamInfoByPage(Team team,
 			PageQueryUtil page) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select t.id,t.team_name teamName,t.team_info teamInfo,t.team_pic teamPic,u.user_name userName,t.create_time createTime,t.is_del isDel  from weixin_team t left join sys_user u")
+		sql.append("select t.id,t.team_name teamName,t.team_info teamInfo,t.team_pic teamPic,u.user_name userName,t.create_time createTime,t.is_del isDel  from portal_team t left join sys_user u")
 		.append(" on t.create_user = u.id where t.is_del=?");
 		List<Object> list = new ArrayList<Object>();
 		list.add(Constrants.DATA_NOT_DEL);

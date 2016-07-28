@@ -28,7 +28,7 @@ public class CompanyServiceImpl extends BaseServiceImpl implements
 	public Map<String, Object> findCompanyInfoByPage(Company company,
 			PageQueryUtil page) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select c.id,c.company_name companyName,c.company_info companyInfo,c.company_pic companyPic,u.user_name userName,c.create_time createTime,c.is_del isDel  from weixin_company c left join sys_user u")
+		sql.append("select c.id,c.company_name companyName,c.company_info companyInfo,c.company_pic companyPic,u.user_name userName,c.create_time createTime,c.is_del isDel  from portal_company c left join sys_user u")
 		.append(" on c.create_user = u.id where c.is_del=?");
 		List<Object> list = new ArrayList<Object>();
 		list.add(Constrants.DATA_NOT_DEL);

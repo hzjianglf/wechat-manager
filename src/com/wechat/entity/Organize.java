@@ -20,7 +20,7 @@ import com.wechat.validate.Str;
  * @date 2016年6月6日 上午10:18:47
  */
 @Entity
-@Table(name="portal_us_organize",catalog="wechat")
+@Table(name="portal_organize",catalog="wechat")
 public class Organize implements Serializable{
 
 	/**

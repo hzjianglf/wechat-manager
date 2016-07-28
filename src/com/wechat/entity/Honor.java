@@ -20,7 +20,7 @@ import com.wechat.validate.NotNull;
  * @date 2016年6月6日 上午10:18:47
  */
 @Entity
-@Table(name="weixin_honor",catalog="wechat")
+@Table(name="portal_honor",catalog="wechat")
 public class Honor implements Serializable{
 
 	/**

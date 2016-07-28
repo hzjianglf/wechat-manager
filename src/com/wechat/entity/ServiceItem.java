@@ -22,7 +22,7 @@ import com.wechat.validate.Str;
  * @date 2016年6月15日下午3:55:36
  */
 @Entity
-@Table(name="weixin_service_item",catalog="wechat")
+@Table(name="portal_serviceitem",catalog="wechat")
 public class ServiceItem implements Serializable{
 
 	/**
